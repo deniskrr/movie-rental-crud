@@ -1,13 +1,19 @@
 package domain;
 
-public class BaseEntity<ID> {
-    private ID id;
+import java.util.UUID;
 
-    public ID getId() {
+public class BaseEntity {
+    private UUID id;
+    
+    public BaseEntity() {
+        id = UUID.randomUUID();
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(ID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
