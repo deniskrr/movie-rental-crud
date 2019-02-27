@@ -7,12 +7,11 @@ import domain.Validator.ValidatorException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
-public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements IRepository<ID, T> {
+public class InMemoryRepository<T extends BaseEntity> implements IRepository<UUID, T> {
 
-    private Map<ID, T> entities;
+    private Map<UUID, T> entities;
     private Validator<T> validator;
 
     public InMemoryRepository(Validator<T> validator) {
@@ -21,32 +20,31 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements IReposi
     }
 
     @Override
-    public Optional<T> findOne(ID id) {
+    public Optional<T> findOne(UUID id) {
         if (id == null) {
-            throw new IllegalArgumentException("id must not be null");
+            throw new IllegalArgumentException("ID can't be null");
         }
         return Optional.ofNullable(entities.get(id));
     }
 
     @Override
     public Iterable<T> findAll() {
-        Set<T> allEntities = entities.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet());
-        return allEntities;
+        return entities.values();
     }
 
     @Override
     public Optional<T> save(T entity) throws ValidatorException {
         if (entity == null) {
-            throw new IllegalArgumentException("id must not be null");
+            throw new IllegalArgumentException("Entity can't be null");
         }
         validator.validate(entity);
         return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
     }
 
     @Override
-    public Optional<T> delete(ID id) {
+    public Optional<T> delete(UUID id) {
         if (id == null) {
-            throw new IllegalArgumentException("id must not be null");
+            throw new IllegalArgumentException("ID can't be null");
         }
         return Optional.ofNullable(entities.remove(id));
     }
@@ -54,7 +52,7 @@ public class InMemoryRepository<ID, T extends BaseEntity<ID>> implements IReposi
     @Override
     public Optional<T> update(T entity) throws ValidatorException {
         if (entity == null) {
-            throw new IllegalArgumentException("entity must not be null");
+            throw new IllegalArgumentException("Entity can't be null");
         }
         validator.validate(entity);
         return Optional.ofNullable(entities.computeIfPresent(entity.getId(), (k, v) -> entity));

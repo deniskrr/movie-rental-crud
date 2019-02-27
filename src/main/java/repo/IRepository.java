@@ -11,7 +11,7 @@ import java.util.Optional;
  * @author radu.
  *
  */
-public interface IRepository<ID, T extends BaseEntity<ID>> {
+public interface IRepository<ID, T extends BaseEntity> {
     /**
      * Find the entity with the given {@code id}.
      *
