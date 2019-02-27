@@ -1,7 +1,8 @@
-package repo;
+package main.java.repo;
 
 
-import domain.BaseEntity;
+import main.java.domain.BaseEntity;
+import main.java.domain.Validator.*;
 
 import java.util.Optional;
 
@@ -11,7 +12,7 @@ import java.util.Optional;
  * @author radu.
  *
  */
-public interface Repository<ID, T extends BaseEntity<ID>> {
+public interface IRepository<ID, T extends BaseEntity<ID>> {
     /**
      * Find the entity with the given {@code id}.
      *
