@@ -1,4 +1,4 @@
-package main.java.domain.Validator;
+package domain.Validator;
 
 public class RentalException extends RuntimeException{
 

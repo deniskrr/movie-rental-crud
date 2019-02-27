@@ -1,7 +1,8 @@
-package main.java.repo;
+package repo;
 
-import main.java.domain.BaseEntity;
-import main.java.domain.Validator.*;
+import domain.BaseEntity;
+import domain.Validator.Validator;
+import domain.Validator.ValidatorException;
 
 import java.util.HashMap;
 import java.util.Map;

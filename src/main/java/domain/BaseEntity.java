@@ -1,4 +1,4 @@
-package main.java.domain;
+package domain;
 
 public class BaseEntity<ID> {
     private ID id;

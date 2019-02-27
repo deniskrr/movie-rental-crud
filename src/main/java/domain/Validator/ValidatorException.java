@@ -1,4 +1,4 @@
-package main.java.domain.Validator;
+package domain.Validator;
 
 public class ValidatorException extends RentalException {
     public ValidatorException(String message) {
