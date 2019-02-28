@@ -2,12 +2,14 @@ package controller;
 
 import domain.Movie;
 import domain.Validator.ValidatorException;
-import repo.MovieRepository;
+import repo.IRepository;
+
+import java.util.UUID;
 
 public class MovieController {
-    private MovieRepository repo;
+    private IRepository<UUID, Movie> repo;
 
-    public MovieController(MovieRepository repo) {
+    public MovieController(IRepository<UUID, Movie> repo) {
         this.repo = repo;
     }
 

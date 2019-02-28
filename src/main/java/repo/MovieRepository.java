@@ -1,11 +1,11 @@
 package repo;
 
 import domain.Movie;
-import domain.Validator.MovieValidator;
+import domain.Validator.Validator;
 
 public class MovieRepository extends InMemoryRepository<Movie> {
 
-    public MovieRepository(MovieValidator validator) {
+    public MovieRepository(Validator<Movie> validator) {
         super(validator);
     }
 }
