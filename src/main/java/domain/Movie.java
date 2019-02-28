@@ -7,6 +7,7 @@ public class Movie extends BaseEntity {
     private int year;
 
     public Movie(String title, double rating, int year) {
+        super();
         this.title = title;
         this.rating = rating;
         this.year = year;
@@ -22,5 +23,10 @@ public class Movie extends BaseEntity {
 
     public int getYear() {
         return year;
+    }
+
+    @Override
+    public String toString() {
+        return getId() + " " + getTitle() + " (" + getYear() + ") " + getRating() + "/10";
     }
 }
