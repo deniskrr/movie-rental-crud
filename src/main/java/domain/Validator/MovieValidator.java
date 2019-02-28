@@ -5,6 +5,14 @@ import domain.Movie;
 public class MovieValidator implements Validator<Movie> {
     @Override
     public void validate(Movie entity) throws ValidatorException {
-        //TODO validate movie
+        if (entity.getTitle().trim().equals("")) {
+            throw new ValidatorException("Empty string");
+        }
+        if (entity.getRating() > 10 || entity.getRating() < 0) {
+            throw new ValidatorException("Invalid rating");
+        }
+        if (entity.getYear() < 0 || entity.getYear() > 2019) {
+            throw new ValidatorException("Invalid year");
+        }
     }
 }
