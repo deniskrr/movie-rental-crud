@@ -95,6 +95,7 @@ public class Console {
             switch (choice) {
                 case 0:
                     running = false;
+                    System.out.println("Exit app.. Bye!");
                     break;
                 case 1:
                     Movie movie = readMovie();
