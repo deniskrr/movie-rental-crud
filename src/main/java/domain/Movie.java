@@ -1,5 +1,8 @@
 package domain;
 
+/**
+ * Class representing a movie entity
+ */
 public class Movie extends BaseEntity {
 
     private String title;

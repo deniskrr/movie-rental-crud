@@ -6,6 +6,9 @@ import domain.Validator.ValidatorException;
 
 import java.util.Scanner;
 
+/**
+ * Class responsible for I/O operations
+ */
 public class Console {
 
     private Scanner scanner = new Scanner(System.in);
@@ -15,6 +18,10 @@ public class Console {
         this.ctrl = ctrl;
     }
 
+    /**
+     * Reads a movie from the user.
+     * @return a new instance of {@link Movie}
+     */
     private Movie readMovie() {
         System.out.print("Title: ");
         String title = scanner.nextLine();
@@ -26,6 +33,10 @@ public class Console {
         return new Movie(title, rating, year);
     }
 
+    /**
+     * Reads an int.
+     * @return the read int
+     */
     private int readInt() {
         while (true) {
             int numChoice = 0;
@@ -40,6 +51,10 @@ public class Console {
         }
     }
 
+    /**
+     * Reads a double.
+     * @return the read double
+     */
     private double readDouble() {
         while (true) {
             double numChoice = 0;
@@ -53,17 +68,25 @@ public class Console {
         }
     }
 
+    /**
+     * Prints the movies.
+     */
     private void printMovies() {
-
         ctrl.getMovies().forEach(System.out::println);
     }
 
+    /**
+     * Prints the menu.
+     */
     private void printMenu() {
         System.out.println("0. Exit");
         System.out.println("1. Add movie");
         System.out.println("2. Print all movies");
     }
 
+    /**
+     * Application loop.
+     */
     public void run() {
         boolean running = true;
         while (running) {
