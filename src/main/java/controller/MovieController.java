@@ -4,6 +4,8 @@ import domain.Movie;
 import domain.Validator.ValidatorException;
 import repo.MovieRepository;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -55,6 +57,12 @@ public class MovieController {
         return repo.getMovies().stream().filter(predicate).collect(Collectors.toList());
     }
 
+    public void sortByName(Predicate<Movie> predicate)
+    {
+        List<Movie> sortedList = (List<Movie>) repo.getMovies();
+        Collections.sort(sortedList);
+        sortedList.forEach(System.out::println);
+    }
     /**
      * Gets the list of movies.
      *
