@@ -1,14 +1,12 @@
 package repo;
 
-import domain.BaseEntity;
 import domain.Validator.ValidatorException;
+import domain.BaseEntity;
 
 import java.util.Optional;
 
 /**
  * Interface for generic CRUD operations on a repository for a specific type.
- *
- * @author radu.
  *
  */
 public interface IRepository<ID, T extends BaseEntity> {
