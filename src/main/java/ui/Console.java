@@ -88,6 +88,7 @@ public class Console {
         System.out.println("2. Print all movies");
         System.out.println("3. Filter movies");
         System.out.println("4. Find most popular genre");
+        System.out.println("5. Sort by title");
     }
 
     private void printFilterMenu() {
@@ -144,6 +145,9 @@ public class Console {
                     break;
                 case 4:
                     System.out.println(ctrl.findMostPopularGenre());
+                    break;
+                case 5:
+                    ctrl.sortByName().forEach(System.out::println);
                     break;
             }
         }
