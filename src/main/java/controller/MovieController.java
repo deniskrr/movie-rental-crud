@@ -28,6 +28,7 @@ public class MovieController {
 
     public MovieController(MovieRepository repo) {
         this.repo = repo;
+        populate();
     }
 
     /**
@@ -39,6 +40,16 @@ public class MovieController {
     public void addMovie(Movie movie) throws ValidatorException {
         repo.save(movie);
     }
+
+
+    private void populate() {
+        addMovie(new Movie("Denis", 10.0,1998, "Comedy"));
+        addMovie(new Movie("Denis 2", 5.0,2001, "Comedy"));
+        addMovie(new Movie("Oana", 10.0,2008, "Action"));
+        addMovie(new Movie("Idk", 1.0,1998, "Horror"));
+        addMovie(new Movie("Idk 2", 5.0,2018, "Thriller"));
+    }
+
 
     public List<Movie> filterMovies(Predicate<Movie> predicate) {
         return repo.getMovies().stream().filter(predicate).collect(Collectors.toList());
