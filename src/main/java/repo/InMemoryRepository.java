@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class InMemoryRepository<T extends BaseEntity> implements IRepository<UUID, T> {
 
-    private Map<UUID, T> entities;
+    protected Map<UUID, T> entities;
     private Validator<T> validator;
 
     public InMemoryRepository(Validator<T> validator) {
@@ -57,4 +57,6 @@ public class InMemoryRepository<T extends BaseEntity> implements IRepository<UUI
         validator.validate(entity);
         return Optional.ofNullable(entities.computeIfPresent(entity.getId(), (k, v) -> entity));
     }
+
+
 }

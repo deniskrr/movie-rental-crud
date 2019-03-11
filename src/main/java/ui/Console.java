@@ -4,7 +4,9 @@ import controller.MovieController;
 import domain.Movie;
 import domain.Validator.ValidatorException;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  * Class responsible for I/O operations
@@ -82,6 +84,13 @@ public class Console {
         System.out.println("0. Exit");
         System.out.println("1. Add movie");
         System.out.println("2. Print all movies");
+        System.out.println("3. Filter movies");
+    }
+
+    private void printFilterMenu() {
+        System.out.println("1. Is nice movie");
+        System.out.println("2. Is sequel");
+        System.out.println("3. Is old");
     }
 
     /**
@@ -99,7 +108,6 @@ public class Console {
                     break;
                 case 1:
                     Movie movie = readMovie();
-                    System.out.println(movie);
                     try {
                         ctrl.addMovie(movie);
                     } catch (ValidatorException e) {
@@ -108,6 +116,28 @@ public class Console {
                     break;
                 case 2:
                     printMovies();
+                    break;
+                case 3:
+                    printFilterMenu();
+                    int pred = readInt();
+                    Predicate<Movie> predicate = null;
+                    switch (pred) {
+                        case 1:
+                            predicate = MovieController.isNiceMovie();
+                            break;
+                        case 2:
+                            predicate = MovieController.isSequel();
+                            break;
+                        case 3:
+                            predicate = MovieController.isOld();
+                            break;
+                        default:
+                            //TODO Add exception
+                            System.out.println("Invalid choice");
+                            return;
+                    }
+                    List<Movie> movieList = ctrl.filterMovies(predicate);
+                    movieList.forEach(System.out::println);
                     break;
             }
         }
