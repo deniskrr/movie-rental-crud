@@ -17,8 +17,9 @@ public class RentalController {
     private IRepository<UUID, Client> clientRepository;
     private IRepository<UUID, Movie> movieRepository;
 
-    public RentalController(IRepository<UUID, Movie> movieRepository) {
+    public RentalController(IRepository<UUID, Movie> movieRepository, IRepository<UUID, Client> clientRepository) {
         this.movieRepository = movieRepository;
+        this.clientRepository = clientRepository;
     }
 
     /**
@@ -31,17 +32,16 @@ public class RentalController {
         movieRepository.save(movie);
     }
 
-
-    private void populate() {
-        addMovie(new Movie("Denis", 10.0,1998, "Comedy"));
-        addMovie(new Movie("Denis 2", 5.0,2001, "Comedy"));
-        addMovie(new Movie("Oana", 10.0,2008, "Action"));
-        addMovie(new Movie("Idk", 1.0,1998, "Horror"));
-        addMovie(new Movie("Idk 2", 5.0,2018, "Thriller"));
+    public void addClient(Client client) throws ValidatorException {
+        clientRepository.save(client);
     }
 
     public Set<Movie> getMovies() {
        return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toSet());
+    }
+
+    public Set<Client> getClients() {
+        return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toSet());
     }
 
     public String findMostPopularGenre() {

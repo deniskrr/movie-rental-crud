@@ -3,12 +3,12 @@ package domain;
 public class Client extends BaseEntity {
     private String firstName;
     private String lastName;
-    private int year_of_birth;
+    private int yearOfBirth;
 
-    public Client(String firstName, String lastName, int year_of_birth) {
+    public Client(String firstName, String lastName, int yearOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.year_of_birth = year_of_birth;
+        this.yearOfBirth = yearOfBirth;
     }
 
     public String getFirstName() {
@@ -19,7 +19,7 @@ public class Client extends BaseEntity {
         return lastName;
     }
 
-    public int getYear_of_birth() {
-        return year_of_birth;
+    public int getYearOfBirth() {
+        return yearOfBirth;
     }
 }
