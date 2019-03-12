@@ -62,12 +62,10 @@ public class MovieController {
         return repo.getMovies().stream().filter(predicate).collect(Collectors.toList());
     }
 
-    public List<Movie> sortByName()
-    {
-        List<Movie> sortedList = new ArrayList<Movie>(repo.getMovies());
-        Collections.sort(sortedList);
-        return sortedList;
+    public List<Movie> sortByTitle() {
+        return repo.getMovies().stream().sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
     }
+
     /**
      * Gets the list of movies.
      *

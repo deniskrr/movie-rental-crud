@@ -147,7 +147,7 @@ public class Console {
                     System.out.println(ctrl.findMostPopularGenre());
                     break;
                 case 5:
-                    ctrl.sortByName().forEach(System.out::println);
+                    ctrl.sortByTitle().forEach(System.out::println);
                     break;
             }
         }
