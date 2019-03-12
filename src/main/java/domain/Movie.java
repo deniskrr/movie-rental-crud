@@ -3,7 +3,7 @@ package domain;
 /**
  * Class representing a movie entity
  */
-public class Movie extends BaseEntity implements Comparable<Movie> {
+public class Movie extends BaseEntity {
 
     private String title;
     private double rating;
@@ -18,10 +18,6 @@ public class Movie extends BaseEntity implements Comparable<Movie> {
         this.genre = genre;
     }
 
-    @Override
-    public int compareTo(Movie o) {
-        return getTitle().compareTo(o.getTitle());
-    }
 
     public String getTitle() {
         return title;
