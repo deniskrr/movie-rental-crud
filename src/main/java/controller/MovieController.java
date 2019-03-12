@@ -2,17 +2,18 @@ package controller;
 
 import domain.Movie;
 import domain.Validator.ValidatorException;
-import repo.MovieRepository;
+import repo.IRepository;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Controller class containing the application functionality.
  */
 public class MovieController {
-    private MovieRepository repo;
+    private IRepository<UUID, Movie> repo;
 
     public static Predicate<Movie> isNiceMovie() {
         return p -> p.getRating() > 8.0;
@@ -26,9 +27,8 @@ public class MovieController {
         return p -> p.getYear() < 2005;
     }
 
-    public MovieController(MovieRepository repo) {
+    public MovieController(IRepository<UUID, Movie> repo) {
         this.repo = repo;
-        populate();
     }
 
     /**
@@ -50,28 +50,23 @@ public class MovieController {
         addMovie(new Movie("Idk 2", 5.0,2018, "Thriller"));
     }
 
+    public Set<Movie> getMovies() {
+       return  StreamSupport.stream(repo.findAll().spliterator(), false).collect(Collectors.toSet());
+    }
 
     public String findMostPopularGenre() {
-        return repo.getMovies().stream()
+        return getMovies().stream()
                 .collect(Collectors.groupingBy(Movie::getGenre,Collectors.counting()))
                 .entrySet().stream().max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey).orElse(null);
     }
 
     public List<Movie> filterMovies(Predicate<Movie> predicate) {
-        return repo.getMovies().stream().filter(predicate).collect(Collectors.toList());
+        return getMovies().stream().filter(predicate).collect(Collectors.toList());
     }
 
     public List<Movie> sortByTitle() {
-        return repo.getMovies().stream().sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
+        return getMovies().stream().sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
     }
 
-    /**
-     * Gets the list of movies.
-     *
-     * @return an {@code Iterable} containing the movies
-     */
-    public Iterable<Movie> getMovies() {
-        return repo.findAll();
-    }
 }
