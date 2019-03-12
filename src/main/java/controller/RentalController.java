@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Client;
 import domain.Movie;
 import domain.Validator.ValidatorException;
 import repo.IRepository;
@@ -13,22 +14,11 @@ import java.util.stream.StreamSupport;
  * Controller class containing the application functionality.
  */
 public class RentalController {
-    private IRepository<UUID, Movie> repo;
+    private IRepository<UUID, Client> clientRepository;
+    private IRepository<UUID, Movie> movieRepository;
 
-    public static Predicate<Movie> isNiceMovie() {
-        return p -> p.getRating() > 8.0;
-    }
-
-    public static Predicate<Movie> isSequel() {
-        return p -> p.getTitle().endsWith("2");
-    }
-
-    public static Predicate<Movie> isOld() {
-        return p -> p.getYear() < 2005;
-    }
-
-    public RentalController(IRepository<UUID, Movie> repo) {
-        this.repo = repo;
+    public RentalController(IRepository<UUID, Movie> movieRepository) {
+        this.movieRepository = movieRepository;
     }
 
     /**
@@ -38,7 +28,7 @@ public class RentalController {
      * @throws ValidatorException - if the movie is not valid
      */
     public void addMovie(Movie movie) throws ValidatorException {
-        repo.save(movie);
+        movieRepository.save(movie);
     }
 
 
@@ -51,7 +41,7 @@ public class RentalController {
     }
 
     public Set<Movie> getMovies() {
-       return  StreamSupport.stream(repo.findAll().spliterator(), false).collect(Collectors.toSet());
+       return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toSet());
     }
 
     public String findMostPopularGenre() {

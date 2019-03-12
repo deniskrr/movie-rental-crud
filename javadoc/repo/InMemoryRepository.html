@@ -49,10 +49,10 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../repo/IRepository.html" title="interface in repo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../movieRepository/IRepository.html" title="interface in movieRepository"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?repo/InMemoryRepository.html" target="_top">Frames</a></li>
+<li><a href="../index.html?movieRepository/InMemoryRepository.html" target="_top">Frames</a></li>
 <li><a href="InMemoryRepository.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">repo</div>
+<div class="subTitle">movieRepository</div>
 <h2 title="Class InMemoryRepository" class="title">Class InMemoryRepository&lt;T extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>repo.InMemoryRepository&lt;T&gt;</li>
+<li>movieRepository.InMemoryRepository&lt;T&gt;</li>
 </ul>
 </li>
 </ul>
@@ -108,17 +108,17 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,T&gt;</dd>
+<dd><a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,T&gt;</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../repo/MovieRepository.html" title="class in repo">MovieRepository</a></dd>
+<dd><a href="../movieRepository/MovieRepository.html" title="class in movieRepository">MovieRepository</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">InMemoryRepository&lt;T extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</span>
 extends java.lang.Object
-implements <a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,T&gt;</pre>
+implements <a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,T&gt;</pre>
 </li>
 </ul>
 </div>
@@ -137,7 +137,7 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../repo/InMemoryRepository.html#InMemoryRepository-domain.Validator.Validator-">InMemoryRepository</a></span>(<a href="../domain/Validator/Validator.html" title="interface in domain.Validator">Validator</a>&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;validator)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../movieRepository/InMemoryRepository.html#InMemoryRepository-domain.Validator.Validator-">InMemoryRepository</a></span>(<a href="../domain/Validator/Validator.html" title="interface in domain.Validator">Validator</a>&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;validator)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -155,30 +155,30 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../repo/InMemoryRepository.html#delete-java.util.UUID-">delete</a></span>(java.util.UUID&nbsp;id)</code>
+<td class="colFirst"><code>java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../movieRepository/InMemoryRepository.html#delete-java.util.UUID-">delete</a></span>(java.util.UUID&nbsp;id)</code>
 <div class="block">Removes the entity with the given id.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.Iterable&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../repo/InMemoryRepository.html#findAll--">findAll</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Iterable&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../movieRepository/InMemoryRepository.html#findAll--">findAll</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../repo/InMemoryRepository.html#findOne-java.util.UUID-">findOne</a></span>(java.util.UUID&nbsp;id)</code>
+<td class="colFirst"><code>java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../movieRepository/InMemoryRepository.html#findOne-java.util.UUID-">findOne</a></span>(java.util.UUID&nbsp;id)</code>
 <div class="block">Find the entity with the given <code>id</code>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../repo/InMemoryRepository.html#save-T-">save</a></span>(<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)</code>
+<td class="colFirst"><code>java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../movieRepository/InMemoryRepository.html#save-T-">save</a></span>(<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)</code>
 <div class="block">Saves the given entity.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../repo/InMemoryRepository.html#update-T-">update</a></span>(<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)</code>
+<td class="colFirst"><code>java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../movieRepository/InMemoryRepository.html#update-T-">update</a></span>(<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)</code>
 <div class="block">Updates the given entity.</div>
 </td>
 </tr>
@@ -210,7 +210,7 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <ul class="blockListLast">
 <li class="blockList">
 <h4>InMemoryRepository</h4>
-<pre>public&nbsp;InMemoryRepository(<a href="../domain/Validator/Validator.html" title="interface in domain.Validator">Validator</a>&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;validator)</pre>
+<pre>public&nbsp;InMemoryRepository(<a href="../domain/Validator/Validator.html" title="interface in domain.Validator">Validator</a>&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;validator)</pre>
 </li>
 </ul>
 </li>
@@ -227,12 +227,12 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <ul class="blockList">
 <li class="blockList">
 <h4>findOne</h4>
-<pre>public&nbsp;java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;findOne(java.util.UUID&nbsp;id)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../repo/IRepository.html#findOne-ID-">IRepository</a></code></span></div>
+<pre>public&nbsp;java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;findOne(java.util.UUID&nbsp;id)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../movieRepository/IRepository.html#findOne-ID-">IRepository</a></code></span></div>
 <div class="block">Find the entity with the given <code>id</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../repo/IRepository.html#findOne-ID-">findOne</a></code>&nbsp;in interface&nbsp;<code><a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
+<dd><code><a href="../movieRepository/IRepository.html#findOne-ID-">findOne</a></code>&nbsp;in interface&nbsp;<code><a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - must be not null.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -246,10 +246,10 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <ul class="blockList">
 <li class="blockList">
 <h4>findAll</h4>
-<pre>public&nbsp;java.lang.Iterable&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;findAll()</pre>
+<pre>public&nbsp;java.lang.Iterable&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;findAll()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../repo/IRepository.html#findAll--">findAll</a></code>&nbsp;in interface&nbsp;<code><a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
+<dd><code><a href="../movieRepository/IRepository.html#findAll--">findAll</a></code>&nbsp;in interface&nbsp;<code><a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>all entities.</dd>
 </dl>
@@ -263,13 +263,13 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <ul class="blockList">
 <li class="blockList">
 <h4>save</h4>
-<pre>public&nbsp;java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;save(<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)
+<pre>public&nbsp;java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;save(<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)
                            throws <a href="../domain/Validator/ValidatorException.html" title="class in domain.Validator">ValidatorException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../repo/IRepository.html#save-T-">IRepository</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../movieRepository/IRepository.html#save-T-">IRepository</a></code></span></div>
 <div class="block">Saves the given entity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../repo/IRepository.html#save-T-">save</a></code>&nbsp;in interface&nbsp;<code><a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
+<dd><code><a href="../movieRepository/IRepository.html#save-T-">save</a></code>&nbsp;in interface&nbsp;<code><a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>entity</code> - must not be null.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -285,12 +285,12 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <ul class="blockList">
 <li class="blockList">
 <h4>delete</h4>
-<pre>public&nbsp;java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;delete(java.util.UUID&nbsp;id)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../repo/IRepository.html#delete-ID-">IRepository</a></code></span></div>
+<pre>public&nbsp;java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;delete(java.util.UUID&nbsp;id)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../movieRepository/IRepository.html#delete-ID-">IRepository</a></code></span></div>
 <div class="block">Removes the entity with the given id.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../repo/IRepository.html#delete-ID-">delete</a></code>&nbsp;in interface&nbsp;<code><a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
+<dd><code><a href="../movieRepository/IRepository.html#delete-ID-">delete</a></code>&nbsp;in interface&nbsp;<code><a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - must not be null.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -306,13 +306,13 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <ul class="blockListLast">
 <li class="blockList">
 <h4>update</h4>
-<pre>public&nbsp;java.util.Optional&lt;<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;update(<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)
+<pre>public&nbsp;java.util.Optional&lt;<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&gt;&nbsp;update(<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a>&nbsp;entity)
                              throws <a href="../domain/Validator/ValidatorException.html" title="class in domain.Validator">ValidatorException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../repo/IRepository.html#update-T-">IRepository</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../movieRepository/IRepository.html#update-T-">IRepository</a></code></span></div>
 <div class="block">Updates the given entity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../repo/IRepository.html#update-T-">update</a></code>&nbsp;in interface&nbsp;<code><a href="../repo/IRepository.html" title="interface in repo">IRepository</a>&lt;java.util.UUID,<a href="../repo/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
+<dd><code><a href="../movieRepository/IRepository.html#update-T-">update</a></code>&nbsp;in interface&nbsp;<code><a href="../movieRepository/IRepository.html" title="interface in movieRepository">IRepository</a>&lt;java.util.UUID,<a href="../movieRepository/InMemoryRepository.html" title="type parameter in InMemoryRepository">T</a> extends <a href="../domain/BaseEntity.html" title="class in domain">BaseEntity</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>entity</code> - must not be null.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -351,10 +351,10 @@ implements <a href="../repo/IRepository.html" title="interface in repo">IReposit
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../repo/IRepository.html" title="interface in repo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../movieRepository/IRepository.html" title="interface in movieRepository"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?repo/InMemoryRepository.html" target="_top">Frames</a></li>
+<li><a href="../index.html?movieRepository/InMemoryRepository.html" target="_top">Frames</a></li>
 <li><a href="InMemoryRepository.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">

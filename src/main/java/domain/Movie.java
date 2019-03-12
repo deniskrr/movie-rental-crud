@@ -1,9 +1,24 @@
 package domain;
 
+import java.util.function.Predicate;
+
 /**
  * Class representing a movie entity
  */
 public class Movie extends BaseEntity {
+
+    public static Predicate<Movie> isNiceMovie() {
+        return p -> p.getRating() > 8.0;
+    }
+
+    public static Predicate<Movie> isSequel() {
+        return p -> p.getTitle().endsWith("2");
+    }
+
+    public static Predicate<Movie> isOld() {
+        return p -> p.getYear() < 2005;
+    }
+
 
     private String title;
     private double rating;

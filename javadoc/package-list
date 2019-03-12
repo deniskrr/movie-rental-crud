@@ -2,5 +2,5 @@
 controller
 domain
 domain.Validator
-repo
+movieRepository
 ui

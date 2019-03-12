@@ -127,13 +127,13 @@ public class Console {
                     Predicate<Movie> predicate = null;
                     switch (pred) {
                         case 1:
-                            predicate = RentalController.isNiceMovie();
+                            predicate = Movie.isNiceMovie();
                             break;
                         case 2:
-                            predicate = RentalController.isSequel();
+                            predicate = Movie.isSequel();
                             break;
                         case 3:
-                            predicate = RentalController.isOld();
+                            predicate = Movie.isOld();
                             break;
                         default:
                             //TODO Add exception
