@@ -1,6 +1,6 @@
 package ui;
 
-import controller.MovieController;
+import controller.RentalController;
 import domain.Movie;
 import domain.Validator.ValidatorException;
 
@@ -14,9 +14,9 @@ import java.util.function.Predicate;
 public class Console {
 
     private Scanner scanner = new Scanner(System.in);
-    private MovieController ctrl;
+    private RentalController ctrl;
 
-    public Console(MovieController ctrl) {
+    public Console(RentalController ctrl) {
         this.ctrl = ctrl;
     }
 
@@ -127,13 +127,13 @@ public class Console {
                     Predicate<Movie> predicate = null;
                     switch (pred) {
                         case 1:
-                            predicate = MovieController.isNiceMovie();
+                            predicate = RentalController.isNiceMovie();
                             break;
                         case 2:
-                            predicate = MovieController.isSequel();
+                            predicate = RentalController.isSequel();
                             break;
                         case 3:
-                            predicate = MovieController.isOld();
+                            predicate = RentalController.isOld();
                             break;
                         default:
                             //TODO Add exception

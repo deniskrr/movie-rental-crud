@@ -12,7 +12,7 @@ import java.util.stream.StreamSupport;
 /**
  * Controller class containing the application functionality.
  */
-public class MovieController {
+public class RentalController {
     private IRepository<UUID, Movie> repo;
 
     public static Predicate<Movie> isNiceMovie() {
@@ -27,7 +27,7 @@ public class MovieController {
         return p -> p.getYear() < 2005;
     }
 
-    public MovieController(IRepository<UUID, Movie> repo) {
+    public RentalController(IRepository<UUID, Movie> repo) {
         this.repo = repo;
     }
 
