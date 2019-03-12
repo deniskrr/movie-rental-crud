@@ -31,8 +31,10 @@ public class Console {
         double rating = readDouble();
         System.out.println("Year: ");
         int year = readInt();
+        System.out.println("Genre:");
+        String genre = scanner.nextLine();
 
-        return new Movie(title, rating, year);
+        return new Movie(title, rating, year, genre);
     }
 
     /**
@@ -85,6 +87,8 @@ public class Console {
         System.out.println("1. Add movie");
         System.out.println("2. Print all movies");
         System.out.println("3. Filter movies");
+        System.out.println("4. Find most popular genre");
+        System.out.println("5. Sort by title");
     }
 
     private void printFilterMenu() {
@@ -138,6 +142,12 @@ public class Console {
                     }
                     List<Movie> movieList = ctrl.filterMovies(predicate);
                     movieList.forEach(System.out::println);
+                    break;
+                case 4:
+                    System.out.println(ctrl.findMostPopularGenre());
+                    break;
+                case 5:
+                    ctrl.sortByTitle().forEach(System.out::println);
                     break;
             }
         }
