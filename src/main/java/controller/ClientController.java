@@ -4,7 +4,7 @@ import domain.Client;
 import domain.Validator.ValidatorException;
 import repo.IRepository;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -20,8 +20,8 @@ public class ClientController {
         clientRepository.save(client);
     }
 
-    public Set<Client> getClients() {
-        return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toSet());
+    public List<Client> getClients() {
+        return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
 }

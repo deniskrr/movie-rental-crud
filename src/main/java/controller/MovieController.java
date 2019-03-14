@@ -31,8 +31,8 @@ public class MovieController {
     }
 
 
-    public Set<Movie> getMovies() {
-       return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toSet());
+    public List<Movie> getMovies() {
+       return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     public String findMostPopularGenre() {
