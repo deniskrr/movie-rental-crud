@@ -35,6 +35,7 @@ public class MovieFileRepository extends InMemoryRepository<Movie> {
                 String genre = items.get(4);
 
                 Movie movie = new Movie(title, rating, year,genre);
+                movie.setId(UUID.fromString(items.get(0)));
                 try {
                     super.save(movie);
                 } catch (ValidatorException e) {
