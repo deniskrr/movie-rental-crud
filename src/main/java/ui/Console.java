@@ -2,8 +2,10 @@ package ui;
 
 import controller.ClientController;
 import controller.MovieController;
+import controller.RentalController;
 import domain.Client;
 import domain.Movie;
+import domain.Rental;
 import domain.Validator.ValidatorException;
 
 import java.util.List;
@@ -18,10 +20,12 @@ public class Console {
     private Scanner scanner = new Scanner(System.in);
     private MovieController movieController;
     private ClientController clientController;
+    private RentalController rentalController;
 
-    public Console(MovieController movieController, ClientController clientController) {
+    public Console(MovieController movieController, ClientController clientController, RentalController rentalController) {
         this.movieController = movieController;
         this.clientController = clientController;
+        this.rentalController = rentalController;
     }
 
     private Client readClient() {
@@ -50,6 +54,24 @@ public class Console {
         String genre = scanner.nextLine();
 
         return new Movie(title, rating, year, genre);
+    }
+
+    private Rental readRental() {
+        System.out.println("Choose the client:");
+        int index = 1;
+        for (Client client : clientController.getClients()) {
+            System.out.println("\t" + index++ + ". " + client);
+        }
+        int clientIndex = readInt();
+        index = 1;
+        for (Movie movie : movieController.getMovies()) {
+            System.out.println("\t" + index++ + ". " + movie);
+        }
+        int movieIndex = readInt();
+        Client client = clientController.getClients().get(clientIndex-1);
+        Movie movie = movieController.getMovies().get(movieIndex-1);
+
+        return new Rental(client, movie);
     }
 
     /**
@@ -154,15 +176,6 @@ public class Console {
         }
     }
 
-    private void rentalMenu() {
-
-    }
-
-    private void exit() {
-        System.out.println("Exit application.");
-        System.exit(0);
-    }
-
     private void movieMenu() {
         printMovieMenu();
         int choice = readInt();
@@ -227,5 +240,25 @@ public class Console {
                 printClients();
                 break;
         }
+    }
+
+    private void rentalMenu() {
+        printRentalMenu();
+        int choice = readInt();
+        switch (choice) {
+            case 1:
+                readRental();
+                break;
+
+        }
+    }
+
+    private void printRentalMenu() {
+
+    }
+
+    private void exit() {
+        System.out.println("Exit application.");
+        System.exit(0);
     }
 }
