@@ -22,4 +22,9 @@ public class Client extends BaseEntity {
     public int getYearOfBirth() {
         return yearOfBirth;
     }
+
+    @Override
+    public String toString() {
+        return getId() + " " + getFirstName() + " " + getLastName() + " " + getYearOfBirth();
+    }
 }

@@ -1,4 +1,5 @@
-import controller.RentalController;
+import controller.ClientController;
+import controller.MovieController;
 import domain.Client;
 import domain.Movie;
 import domain.Validator.ClientValidator;
@@ -14,8 +15,9 @@ public class Main {
         Validator<Client> clientValidator = new ClientValidator();
         MovieFileRepository movieRepo = new MovieFileRepository(movieValidator,"movies.txt");
         ClientFileRepository clientRepo = new ClientFileRepository(clientValidator,"clients.txt");
-        RentalController ctrl = new RentalController(movieRepo, clientRepo);
-        Console console = new Console(ctrl);
+        MovieController movieController = new MovieController(movieRepo);
+        ClientController clientController = new ClientController(clientRepo);
+        Console console = new Console(movieController, clientController);
 
         console.run();
 

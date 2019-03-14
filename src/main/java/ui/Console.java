@@ -1,6 +1,8 @@
 package ui;
 
-import controller.RentalController;
+import controller.ClientController;
+import controller.MovieController;
+import domain.Client;
 import domain.Movie;
 import domain.Validator.ValidatorException;
 
@@ -14,10 +16,23 @@ import java.util.function.Predicate;
 public class Console {
 
     private Scanner scanner = new Scanner(System.in);
-    private RentalController ctrl;
+    private MovieController movieController;
+    private ClientController clientController;
 
-    public Console(RentalController ctrl) {
-        this.ctrl = ctrl;
+    public Console(MovieController movieController, ClientController clientController) {
+        this.movieController = movieController;
+        this.clientController = clientController;
+    }
+
+    private Client readClient() {
+        System.out.print("First name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Last name ");
+        String lastName = scanner.nextLine();
+        System.out.print("Year:");
+        int year = readInt();
+
+        return new Client(firstName, lastName, year);
     }
 
     /**
@@ -29,9 +44,9 @@ public class Console {
         String title = scanner.nextLine();
         System.out.print("Rating: ");
         double rating = readDouble();
-        System.out.println("Year: ");
+        System.out.print("Year: ");
         int year = readInt();
-        System.out.println("Genre:");
+        System.out.print("Genre:");
         String genre = scanner.nextLine();
 
         return new Movie(title, rating, year, genre);
@@ -76,19 +91,37 @@ public class Console {
      * Prints the movies.
      */
     private void printMovies() {
-        ctrl.getMovies().forEach(System.out::println);
+        movieController.getMovies().forEach(System.out::println);
+    }
+
+    private void printClients() {
+        clientController.getClients().forEach(System.out::println);
+    }
+
+    private void printMenu() {
+        System.out.println("0. Exit");
+        System.out.println("1. Movie menu");
+        System.out.println("2. Client menu");
+        System.out.println("3. Rental menu");
     }
 
     /**
-     * Prints the menu.
+     * Prints the movie menu.
      */
-    private void printMenu() {
-        System.out.println("0. Exit");
+    private void printMovieMenu() {
         System.out.println("1. Add movie");
         System.out.println("2. Print all movies");
         System.out.println("3. Filter movies");
         System.out.println("4. Find most popular genre");
         System.out.println("5. Sort by title");
+    }
+
+    /**
+     * Prints the movie menu.
+     */
+    private void printClientMenu() {
+        System.out.println("1. Add client");
+        System.out.println("2. Print all clients");
     }
 
     private void printFilterMenu() {
@@ -101,55 +134,98 @@ public class Console {
      * Application loop.
      */
     public void run() {
-        boolean running = true;
-        while (running) {
+        while (true) {
             printMenu();
-            int choice = readInt();
-            switch (choice) {
+            int menuChoice = readInt();
+            switch (menuChoice) {
                 case 0:
-                    running = false;
-                    System.out.println("Exit app.. Bye!");
+                    exit();
                     break;
                 case 1:
-                    Movie movie = readMovie();
-                    try {
-                        ctrl.addMovie(movie);
-                    } catch (ValidatorException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    movieMenu();
                     break;
                 case 2:
-                    printMovies();
+                    clientMenu();
                     break;
                 case 3:
-                    printFilterMenu();
-                    int pred = readInt();
-                    Predicate<Movie> predicate = null;
-                    switch (pred) {
-                        case 1:
-                            predicate = Movie.isNiceMovie();
-                            break;
-                        case 2:
-                            predicate = Movie.isSequel();
-                            break;
-                        case 3:
-                            predicate = Movie.isOld();
-                            break;
-                        default:
-                            //TODO Add exception
-                            System.out.println("Invalid choice");
-                            return;
-                    }
-                    List<Movie> movieList = ctrl.filterMovies(predicate);
-                    movieList.forEach(System.out::println);
-                    break;
-                case 4:
-                    System.out.println(ctrl.findMostPopularGenre());
-                    break;
-                case 5:
-                    ctrl.sortByTitle().forEach(System.out::println);
+                    rentalMenu();
                     break;
             }
+        }
+    }
+
+    private void rentalMenu() {
+
+    }
+
+    private void exit() {
+        System.out.println("Exit application.");
+        System.exit(0);
+    }
+
+    private void movieMenu() {
+        printMovieMenu();
+        int choice = readInt();
+        switch (choice) {
+            case 1:
+                Movie movie = readMovie();
+                try {
+                    movieController.addMovie(movie);
+                } catch (ValidatorException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 2:
+                printMovies();
+                break;
+            case 3:
+                printFilterMenu();
+                int pred = readInt();
+                Predicate<Movie> predicate = null;
+                switch (pred) {
+                    case 1:
+                        predicate = Movie.isNiceMovie();
+                        break;
+                    case 2:
+                        predicate = Movie.isSequel();
+                        break;
+                    case 3:
+                        predicate = Movie.isOld();
+                        break;
+                    default:
+                        //TODO Add exception
+                        System.out.println("Invalid choice");
+                        return;
+                }
+                List<Movie> movieList = movieController.filterMovies(predicate);
+                movieList.forEach(System.out::println);
+                break;
+            case 4:
+                System.out.println(movieController.findMostPopularGenre());
+                break;
+            case 5:
+                movieController.sortByTitle().forEach(System.out::println);
+                break;
+        }
+    }
+
+
+
+    private void clientMenu() {
+        printClientMenu();
+        int choice = readInt();
+        switch (choice) {
+            case 1:
+                Client client = readClient();
+                try {
+                    clientController.addClient(client);
+                } catch (ValidatorException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                printClients();
+                break;
         }
     }
 }

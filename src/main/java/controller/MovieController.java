@@ -13,13 +13,11 @@ import java.util.stream.StreamSupport;
 /**
  * Controller class containing the application functionality.
  */
-public class RentalController {
-    private IRepository<UUID, Client> clientRepository;
+public class MovieController {
     private IRepository<UUID, Movie> movieRepository;
 
-    public RentalController(IRepository<UUID, Movie> movieRepository, IRepository<UUID, Client> clientRepository) {
+    public MovieController(IRepository<UUID, Movie> movieRepository) {
         this.movieRepository = movieRepository;
-        this.clientRepository = clientRepository;
     }
 
     /**
@@ -32,16 +30,9 @@ public class RentalController {
         movieRepository.save(movie);
     }
 
-    public void addClient(Client client) throws ValidatorException {
-        clientRepository.save(client);
-    }
 
     public Set<Movie> getMovies() {
        return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toSet());
-    }
-
-    public Set<Client> getClients() {
-        return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toSet());
     }
 
     public String findMostPopularGenre() {
