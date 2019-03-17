@@ -9,7 +9,7 @@ public class MovieValidator implements Validator<Movie> {
             throw new InvalidTitleException();
         }
         if (entity.getRating() > 10 || entity.getRating() < 0) {
-            throw new ValidatorException("Invalid rating");
+            throw new InvalidRatingException();
         }
         if (entity.getYear() < 0 || entity.getYear() > 2019) {
             throw new ValidatorException("Invalid year");
