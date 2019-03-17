@@ -75,6 +75,10 @@ public class Console {
         return new Rental(clientID, movieID);
     }
 
+    private UUID readID() {
+        return UUID.fromString(scanner.nextLine());
+    }
+
     /**
      * Reads an int.
      * @return the read int
@@ -122,7 +126,15 @@ public class Console {
     }
 
     private void printRentals() {
-        rentalController.getRentals().forEach(System.out::println);
+        rentalController.getRentals().forEach((rental -> {
+            Client client = clientController.getClient(rental.getClientID());
+            Movie movie = movieController.getMovie(rental.getMovieID());
+            if (client != null && movie != null) {
+                System.out.println("Client:" + client + " --- Movie:" +movie);
+            } else {
+                rentalController.deleteRental(rental.getId());
+            }
+        }));
     }
 
     private void printMenu() {
@@ -141,6 +153,7 @@ public class Console {
         System.out.println("3. Filter movies");
         System.out.println("4. Find most popular genre");
         System.out.println("5. Sort by title");
+        System.out.println("6. Delete movie");
     }
 
     /**
@@ -149,6 +162,7 @@ public class Console {
     private void printClientMenu() {
         System.out.println("1. Add client");
         System.out.println("2. Print all clients");
+        System.out.println("3. Delete client");
     }
 
     private void printRentalMenu() {
@@ -161,6 +175,8 @@ public class Console {
         System.out.println("2. Is sequel");
         System.out.println("3. Is old");
     }
+
+
 
     /**
      * Application loop.
@@ -229,6 +245,11 @@ public class Console {
             case 5:
                 movieController.sortByTitle().forEach(System.out::println);
                 break;
+            case 6:
+                UUID id = readID();
+                System.out.print("ID: ");
+                movieController.deleteMovie(id);
+                break;
         }
     }
 
@@ -246,6 +267,11 @@ public class Console {
                 break;
             case 2:
                 printClients();
+                break;
+            case 3:
+                UUID id = readID();
+                System.out.print("ID: ");
+                clientController.deleteClient(id);
                 break;
         }
     }
