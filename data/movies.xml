@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<movies>
+    <movie>
+        <id>6b2f37cc-01c6-49c2-93b0-9f0af2968015</id>
+        <title>Denis Back</title>
+        <genre>Action</genre>
+        <year>2019</year>
+        <rating>10.0</rating>
+    </movie>
+</movies>
