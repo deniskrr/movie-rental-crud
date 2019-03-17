@@ -1,6 +1,5 @@
 package controller;
 
-import domain.Client;
 import domain.Movie;
 import domain.Validator.ValidatorException;
 import repo.IRepository;
@@ -28,6 +27,17 @@ public class MovieController {
      */
     public void addMovie(Movie movie) throws ValidatorException {
         movieRepository.save(movie);
+    }
+
+    public void deleteMovie(UUID id) {
+        movieRepository.delete(id);
+    }
+
+    public Movie getMovie(UUID id) {
+        if (movieRepository.findOne(id).isPresent()) {
+            return movieRepository.findOne(id).get();
+        }
+        return null;
     }
 
 

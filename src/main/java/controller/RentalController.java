@@ -22,8 +22,14 @@ public class RentalController {
         this.rentalRepository.save(rental);
     }
 
+    public void deleteRental(UUID id) {
+        this.rentalRepository.delete(id);
+    }
+
     public List<Rental> getRentals() {
         return  StreamSupport.stream(rentalRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
+
+
 
 }
