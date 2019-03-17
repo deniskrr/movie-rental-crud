@@ -6,6 +6,7 @@ import controller.RentalController;
 import domain.Client;
 import domain.Movie;
 import domain.Rental;
+import domain.Validator.InvalidCommandException;
 import domain.Validator.ValidatorException;
 
 import java.util.List;
@@ -198,6 +199,8 @@ public class Console {
                 case 3:
                     rentalMenu();
                     break;
+                default:
+                    throw new InvalidCommandException();
             }
         }
     }
@@ -250,6 +253,8 @@ public class Console {
                 System.out.print("ID: ");
                 movieController.deleteMovie(id);
                 break;
+            default:
+                throw new InvalidCommandException();
         }
     }
 
@@ -273,6 +278,8 @@ public class Console {
                 System.out.print("ID: ");
                 clientController.deleteClient(id);
                 break;
+            default:
+                throw new InvalidCommandException();
         }
     }
 
@@ -291,7 +298,8 @@ public class Console {
             case 2:
                 printRentals();
                 break;
-
+            default:
+                throw new InvalidCommandException();
         }
     }
 
