@@ -11,6 +11,12 @@ public class Client extends BaseEntity {
         this.yearOfBirth = yearOfBirth;
     }
 
+    public Client() {
+        this.firstName = "";
+        this.lastName = "";
+        this.yearOfBirth= 0;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -21,6 +27,18 @@ public class Client extends BaseEntity {
 
     public int getYearOfBirth() {
         return yearOfBirth;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setYearOfBirth(int yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
     }
 
     @Override
