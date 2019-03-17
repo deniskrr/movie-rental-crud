@@ -19,6 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Optional;
+import java.util.UUID;
 
 
 public class ClientXmlRepository extends XmlRepository<Client> {
@@ -45,6 +46,9 @@ public class ClientXmlRepository extends XmlRepository<Client> {
             Element clientElement = document.createElement("client");
             root.appendChild(clientElement);
 
+
+            appendChildWithText(document, clientElement, "id",
+                    entity.getId().toString());
             appendChildWithText(document, clientElement, "first_name", entity.getFirstName());
             appendChildWithText(document, clientElement, "last_name", entity.getLastName());
             appendChildWithText(document, clientElement, "year",
@@ -83,9 +87,9 @@ public class ClientXmlRepository extends XmlRepository<Client> {
     }
 
     private static Client createClient(Element clientNode) {
-        String category = clientNode.getAttribute("category");
         Client client = new Client();
 
+        client.setId(UUID.fromString(getTextFromTagName(clientNode, "id")));
         client.setFirstName(getTextFromTagName(clientNode, "first_name"));
         client.setLastName(getTextFromTagName(clientNode, "last_name"));
         client.setYearOfBirth(Integer.valueOf(getTextFromTagName(clientNode, "year")));
