@@ -1,9 +1,9 @@
-package repo;
+package repo.file;
 
-import domain.Client;
-import domain.Movie;
+import domain.Rental;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
+import repo.InMemoryRepository;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -11,17 +11,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-public class ClientFileRepository extends InMemoryRepository<Client> {
-
+public class RentalFileRepository extends InMemoryRepository<Rental> {
     private String fileName;
 
-    public ClientFileRepository(Validator<Client> validator, String fileName) {
+    public RentalFileRepository(Validator<Rental> validator, String fileName) {
         super(validator);
         this.fileName = fileName;
         this.loadData();
     }
+
 
     private void loadData() {
         Path path = Paths.get(fileName);
@@ -30,14 +33,13 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
             Files.lines(path).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(","));
 
-               String firstName = items.get(1);
-               String lastname = items.get(2);
-               int yearOfBirth = Integer.parseInt(items.get(3));
+                String clientID = items.get(1);
+                String movieID = items.get(2);
 
-               Client client = new Client(firstName, lastname, yearOfBirth);
-               client.setId(UUID.fromString(items.get(0)));
+                Rental rental = new Rental(UUID.fromString(clientID), UUID.fromString(movieID));
+                rental.setId(UUID.fromString(items.get(0)));
                 try {
-                    super.save(client);
+                    super.save(rental);
                 } catch (ValidatorException e) {
                     e.printStackTrace();
                 }
@@ -48,8 +50,8 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
     }
 
     @Override
-    public Optional<Client> save(Client entity) throws ValidatorException {
-        Optional<Client> optional = super.save(entity);
+    public Optional<Rental> save(Rental entity) throws ValidatorException {
+        Optional<Rental> optional = super.save(entity);
         if (optional.isPresent()) {
             return optional;
         }
@@ -57,22 +59,14 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
         return Optional.empty();
     }
 
-    @Override
-    public Optional<Client> delete(UUID id) {
-        Optional<Client> optional = super.delete(id);
-        saveToFile();
-        return optional;
-    }
-
     private void saveToFile() {
         Path path = Paths.get(fileName);
-        System.out.println("Deleting");
 
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             super.findAll().forEach(entity -> {
                 try {
                     bufferedWriter.write(
-                            entity.getId() + "," + entity.getFirstName() + "," + entity.getLastName() + "," + entity.getYearOfBirth());
+                            entity.getId() + "," + entity.getClientID() + "," + entity.getMovieID());
                     bufferedWriter.newLine();
                 } catch (IOException e) {
                     e.printStackTrace();

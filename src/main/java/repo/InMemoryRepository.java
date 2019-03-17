@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class InMemoryRepository<T extends BaseEntity> implements IRepository<UUID, T> {
 
-    protected Map<UUID, T> entities;
+    private Map<UUID, T> entities;
     private Validator<T> validator;
 
     public InMemoryRepository(Validator<T> validator) {
