@@ -41,12 +41,10 @@ public class ClientXmlRepository extends XmlRepository<Client> {
                     .newInstance()
                     .newDocumentBuilder()
                     .parse("data/clients.xml");
-            Element root = document.getDocumentElement();
 
+            Element root = document.getDocumentElement();
             Element clientElement = document.createElement("client");
             root.appendChild(clientElement);
-
-
             appendChildWithText(document, clientElement, "id",
                     entity.getId().toString());
             appendChildWithText(document, clientElement, "first_name", entity.getFirstName());
@@ -64,8 +62,8 @@ public class ClientXmlRepository extends XmlRepository<Client> {
         }
         return optionalClient;
     }
-    
-    public void loadData() throws Exception{
+
+    public void loadData() throws Exception {
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
 
@@ -81,7 +79,7 @@ public class ClientXmlRepository extends XmlRepository<Client> {
             if (clientNode instanceof Element) {
                 Client client = createClient((Element) clientNode);
                 super.save(client);
-                
+
             }
         }
     }

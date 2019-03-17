@@ -40,7 +40,7 @@ public class RentalXmlRepository extends XmlRepository<Rental> {
                     .parse("data/rentals.xml");
             Element root = document.getDocumentElement();
 
-            Element rentalElement = document.createElement("rental");
+            Element rentalElement = document.createElement( "rental");
             root.appendChild(rentalElement);
 
             appendChildWithText(document, rentalElement, "id",
