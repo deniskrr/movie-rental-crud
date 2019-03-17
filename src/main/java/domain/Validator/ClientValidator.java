@@ -12,7 +12,7 @@ public class ClientValidator implements Validator<Client> {
             throw new InvalidNameException();
         }
         if (entity.getYearOfBirth() < 0 || entity.getYearOfBirth() > 2019) {
-            throw new InvalidRatingException();
+            throw new InvalidYearException();
         }
     }
 }
