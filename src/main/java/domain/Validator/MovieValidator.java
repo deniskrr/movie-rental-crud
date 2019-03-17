@@ -6,7 +6,7 @@ public class MovieValidator implements Validator<Movie> {
     @Override
     public void validate(Movie entity) throws ValidatorException {
         if (entity.getTitle().trim().equals("")) {
-            throw new ValidatorException("Empty title");
+            throw new InvalidTitleException();
         }
         if (entity.getRating() > 10 || entity.getRating() < 0) {
             throw new ValidatorException("Invalid rating");
