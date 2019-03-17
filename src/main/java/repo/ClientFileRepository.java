@@ -53,17 +53,31 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
         if (optional.isPresent()) {
             return optional;
         }
-        saveToFile(entity);
+        saveToFile();
         return Optional.empty();
     }
 
-    private void saveToFile(Client entity) {
-        Path path = Paths.get(fileName);
+    @Override
+    public Optional<Client> delete(UUID id) {
+        Optional<Client> optional = super.delete(id);
+        saveToFile();
+        return optional;
+    }
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(
-                    entity.getId() + "," + entity.getFirstName() + "," + entity.getLastName() + "," + entity.getYearOfBirth());
-            bufferedWriter.newLine();
+    private void saveToFile() {
+        Path path = Paths.get(fileName);
+        System.out.println("Deleting");
+
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            super.findAll().forEach(entity -> {
+                try {
+                    bufferedWriter.write(
+                            entity.getId() + "," + entity.getFirstName() + "," + entity.getLastName() + "," + entity.getYearOfBirth());
+                    bufferedWriter.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

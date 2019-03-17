@@ -33,10 +33,11 @@ public class RentalFileRepository extends InMemoryRepository<Rental>{
             Files.lines(path).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(","));
 
-                String clientID = items.get(0);
-                String movieID = items.get(1);
+                String clientID = items.get(1);
+                String movieID = items.get(2);
 
                 Rental rental = new Rental(UUID.fromString(clientID), UUID.fromString(movieID));
+                rental.setId(UUID.fromString(items.get(0)));
                 try {
                     super.save(rental);
                 } catch (ValidatorException e) {
@@ -54,17 +55,23 @@ public class RentalFileRepository extends InMemoryRepository<Rental>{
         if (optional.isPresent()) {
             return optional;
         }
-        saveToFile(entity);
+        saveToFile();
         return Optional.empty();
     }
 
-    private void saveToFile(Rental entity) {
+    private void saveToFile() {
         Path path = Paths.get(fileName);
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(
-                    entity.getClientID() + "," + entity.getMovieID());
-            bufferedWriter.newLine();
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            super.findAll().forEach(entity -> {
+                try {
+                    bufferedWriter.write(
+                            entity.getId() + "," + entity.getClientID() + "," + entity.getMovieID());
+                    bufferedWriter.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

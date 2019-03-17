@@ -53,18 +53,24 @@ public class MovieFileRepository extends InMemoryRepository<Movie> {
         if (optional.isPresent()) {
             return optional;
         }
-        saveToFile(entity);
+        saveToFile();
         return Optional.empty();
     }
 
-    private void saveToFile(Movie entity) {
+    private void saveToFile() {
         Path path = Paths.get(fileName);
 
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            bufferedWriter.write(
-                    entity.getId() + "," + entity.getTitle() + "," + entity.getRating() + "," + entity.getYear() + ","
-        + entity.getGenre());
-            bufferedWriter.newLine();
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            super.findAll().forEach(entity -> {
+                try {
+                    bufferedWriter.write(
+                            entity.getId() + "," + entity.getTitle() + "," + entity.getRating() + "," + entity.getYear() + ","
+                                    + entity.getGenre());
+                    bufferedWriter.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
