@@ -1,25 +1,27 @@
 package domain;
 
+import java.util.UUID;
+
 public class Rental extends BaseEntity {
-    private Client client;
-    private Movie movie;
+    private UUID clientID;
+    private UUID movieID;
 
-    public Rental(Client client, Movie movie) {
+    public Rental(UUID clientID, UUID movieID) {
         super();
-        this.client = client;
-        this.movie = movie;
+        this.clientID = clientID;
+        this.movieID = movieID;
     }
 
-    public Client getClient() {
-        return client;
+    public UUID getClientID() {
+        return clientID;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public UUID getMovieID() {
+        return movieID;
     }
 
     @Override
     public String toString() {
-        return "Client: " + client + " --- Movie: " + movie;
+        return "Client: " + clientID + " Movie: " + movieID;
     }
 }

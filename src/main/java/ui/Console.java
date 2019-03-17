@@ -10,6 +10,7 @@ import domain.Validator.ValidatorException;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 /**
@@ -68,10 +69,10 @@ public class Console {
             System.out.println("\t" + index++ + ". " + movie);
         }
         int movieIndex = readInt();
-        Client client = clientController.getClients().get(clientIndex-1);
-        Movie movie = movieController.getMovies().get(movieIndex-1);
+        UUID clientID = clientController.getClients().get(clientIndex-1).getId();
+        UUID movieID = movieController.getMovies().get(movieIndex-1).getId();
 
-        return new Rental(client, movie);
+        return new Rental(clientID, movieID);
     }
 
     /**
