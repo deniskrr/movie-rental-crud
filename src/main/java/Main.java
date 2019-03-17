@@ -15,6 +15,7 @@ import repo.file.MovieFileRepository;
 import repo.file.RentalFileRepository;
 import repo.xml.ClientXmlRepository;
 import repo.xml.MovieXmlRepository;
+import repo.xml.RentalXmlRepository;
 import ui.Console;
 
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class Main {
         Validator<Rental> rentalValidator = new RentalValidator();
         IRepository<UUID, Movie> movieRepo = new MovieXmlRepository(movieValidator,"data/movies.xml");
         IRepository<UUID, Client> clientRepo = new ClientXmlRepository(clientValidator, "data/clients.xml");
-        IRepository<UUID, Rental> rentalRepo = new RentalFileRepository(rentalValidator,"data/rentals.txt");
+        IRepository<UUID, Rental> rentalRepo = new RentalXmlRepository(rentalValidator,"data/rentals.xml");
         MovieController movieController = new MovieController(movieRepo);
         ClientController clientController = new ClientController(clientRepo);
         RentalController rentalController = new RentalController(rentalRepo);

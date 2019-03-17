@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rentals>
+    <rental>
+        <id>dfd343eb-3fdf-4d87-a002-2f332ecab442</id>
+        <client_id>93674fc1-4d37-4744-883b-47753efa10dd</client_id>
+        <movie_id>6b2f37cc-01c6-49c2-93b0-9f0af2968015</movie_id>
+    </rental>
+</rentals>
