@@ -12,7 +12,7 @@ public class MovieValidator implements Validator<Movie> {
             throw new InvalidRatingException();
         }
         if (entity.getYear() < 0 || entity.getYear() > 2019) {
-            throw new ValidatorException("Invalid year");
+            throw new InvalidYearException();
         }
         if (entity.getGenre().trim().equals("")) {
             throw new ValidatorException("Empty genre");
