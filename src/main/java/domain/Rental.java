@@ -18,5 +18,8 @@ public class Rental extends BaseEntity {
         return movie;
     }
 
-
+    @Override
+    public String toString() {
+        return "Client: " + client + " --- Movie: " + movie;
+    }
 }

@@ -120,6 +120,10 @@ public class Console {
         clientController.getClients().forEach(System.out::println);
     }
 
+    private void printRentals() {
+        rentalController.getRentals().forEach(System.out::println);
+    }
+
     private void printMenu() {
         System.out.println("0. Exit");
         System.out.println("1. Movie menu");
@@ -144,6 +148,11 @@ public class Console {
     private void printClientMenu() {
         System.out.println("1. Add client");
         System.out.println("2. Print all clients");
+    }
+
+    private void printRentalMenu() {
+        System.out.println("1. Rent a movie");
+        System.out.println("2. Print all rentals");
     }
 
     private void printFilterMenu() {
@@ -222,8 +231,6 @@ public class Console {
         }
     }
 
-
-
     private void clientMenu() {
         printClientMenu();
         int choice = readInt();
@@ -247,14 +254,18 @@ public class Console {
         int choice = readInt();
         switch (choice) {
             case 1:
-                readRental();
+                Rental rental = readRental();
+                try {
+                    rentalController.addRental(rental);
+                } catch (ValidatorException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                printRentals();
                 break;
 
         }
-    }
-
-    private void printRentalMenu() {
-
     }
 
     private void exit() {
