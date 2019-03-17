@@ -1,5 +1,0 @@
-86448787-2e38-4f64-9489-ac9e5fbd517e,Denis,10.0,1998,Comedy
-020d4c1d-05d6-413e-94e9-776a2e0b5e6e,Denis 2,5.0,2001,Comedy
-2b00515e-98b9-4d7f-a62a-7b3b55bd12f3,Oana,10.0,2008,Action
-67b0a1f8-73d1-4692-afa8-beaca2a08d29,Idk,1.0,1998,Horror
-480dbba4-5a51-4f2c-8421-608d5ceca68b,Idk 2,5.0,2018,Thriller

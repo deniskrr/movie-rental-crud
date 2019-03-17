@@ -8,9 +8,9 @@ import domain.Validator.ClientValidator;
 import domain.Validator.MovieValidator;
 import domain.Validator.RentalValidator;
 import domain.Validator.Validator;
-import repo.ClientFileRepository;
-import repo.MovieFileRepository;
-import repo.RentalFileRepository;
+import repo.file.ClientFileRepository;
+import repo.file.MovieFileRepository;
+import repo.file.RentalFileRepository;
 import ui.Console;
 
 public class Main {
@@ -18,9 +18,9 @@ public class Main {
         Validator<Movie> movieValidator = new MovieValidator();
         Validator<Client> clientValidator = new ClientValidator();
         Validator<Rental> rentalValidator = new RentalValidator();
-        MovieFileRepository movieRepo = new MovieFileRepository(movieValidator,"movies.txt");
-        ClientFileRepository clientRepo = new ClientFileRepository(clientValidator,"clients.txt");
-        RentalFileRepository rentalRepo = new RentalFileRepository(rentalValidator,"rentals.txt");
+        MovieFileRepository movieRepo = new MovieFileRepository(movieValidator,"data/movies.txt");
+        ClientFileRepository clientRepo = new ClientFileRepository(clientValidator,"data/clients.txt");
+        RentalFileRepository rentalRepo = new RentalFileRepository(rentalValidator,"data/rentals.txt");
         MovieController movieController = new MovieController(movieRepo);
         ClientController clientController = new ClientController(clientRepo);
         RentalController rentalController = new RentalController(rentalRepo);
