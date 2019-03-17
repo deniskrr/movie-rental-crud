@@ -12,12 +12,26 @@ public class Rental extends BaseEntity {
         this.movieID = movieID;
     }
 
+    public Rental() {
+        super();
+        this.clientID = UUID.randomUUID();
+        this.movieID = UUID.randomUUID();
+    }
+
     public UUID getClientID() {
         return clientID;
     }
 
     public UUID getMovieID() {
         return movieID;
+    }
+
+    public void setClientID(UUID clientID) {
+        this.clientID = clientID;
+    }
+
+    public void setMovieID(UUID movieID) {
+        this.movieID = movieID;
     }
 
     @Override

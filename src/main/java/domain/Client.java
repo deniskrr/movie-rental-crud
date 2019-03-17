@@ -6,12 +6,14 @@ public class Client extends BaseEntity {
     private int yearOfBirth;
 
     public Client(String firstName, String lastName, int yearOfBirth) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.yearOfBirth = yearOfBirth;
     }
 
     public Client() {
+        super();
         this.firstName = "";
         this.lastName = "";
         this.yearOfBirth= 0;

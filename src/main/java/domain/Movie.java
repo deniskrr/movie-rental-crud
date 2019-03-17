@@ -26,6 +26,7 @@ public class Movie extends BaseEntity {
     private String genre;
 
     public Movie() {
+        super();
         this.title = "";
         this.rating = 0;
         this.year = 0;
