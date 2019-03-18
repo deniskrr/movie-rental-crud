@@ -40,6 +40,11 @@ public class MovieController {
         return null;
     }
 
+    public List<Movie> getSortedMoviesYear(int year) {
+        List<Movie> initial = getMovies().stream().filter(movie -> movie.getYear() > year).sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
+        getMovies().stream().filter(movie -> movie.getYear() < year).sorted(Comparator.comparing(Movie::getTitle).reversed()).forEach(initial::add);
+        return initial;
+    }
 
     public List<Movie> getMovies() {
        return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());

@@ -161,6 +161,7 @@ public class Console {
         System.out.println("4. Find most popular genre");
         System.out.println("5. Sort by title");
         System.out.println("6. Delete movie");
+        System.out.println("7  Print sorted movies after / before year");
     }
 
     /**
@@ -258,6 +259,11 @@ public class Console {
                 UUID id = readID();
                 System.out.print("ID: ");
                 movieController.deleteMovie(id);
+                break;
+            case 7:
+                System.out.print("Year:");
+                int year = readInt();
+                movieController.getSortedMoviesYear(year).forEach(System.out::println);
                 break;
             default:
                 throw new InvalidCommandException();
