@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Class responsible for I/O operations
@@ -138,6 +139,11 @@ public class Console {
         }));
     }
 
+    private void printRentalCount(){
+        rentalController.getRentals().stream().collect(Collectors.groupingBy(Rental::getMovieID, Collectors.counting())).entrySet().stream().forEach(entry ->
+                System.out.println(movieController.getMovie(entry.getKey()).getTitle() + " - " + entry.getValue()));
+    }
+
     private void printMenu() {
         System.out.println("0. Exit");
         System.out.println("1. Movie menu");
@@ -169,6 +175,8 @@ public class Console {
     private void printRentalMenu() {
         System.out.println("1. Rent a movie");
         System.out.println("2. Print all rentals");
+        System.out.println("3. Print the most rented movie");
+        System.out.println("4. Print how many times each movie was rented");
     }
 
     private void printFilterMenu() {
@@ -235,9 +243,7 @@ public class Console {
                         predicate = Movie.isOld();
                         break;
                     default:
-                        //TODO Add exception
-                        System.out.println("Invalid choice");
-                        return;
+                        throw new InvalidCommandException();
                 }
                 List<Movie> movieList = movieController.filterMovies(predicate);
                 movieList.forEach(System.out::println);
@@ -297,6 +303,13 @@ public class Console {
                 break;
             case 2:
                 printRentals();
+                break;
+            case 3:
+                UUID id = rentalController.getMostRentedMovie();
+                System.out.println(movieController.getMovie(id));
+                break;
+            case 4:
+                printRentalCount();
                 break;
             default:
                 throw new InvalidCommandException();
