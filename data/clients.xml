@@ -1,3 +1,2 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<clients>
-</clients>
+<?xml version="1.0" encoding="UTF-8"?><clients>
+<client><id>a3c50be7-dfc8-49df-8d1c-c04bc122d333</id><first_name>Denis</first_name><last_name>Craciunescu</last_name><year>1998</year></client><client><id>5a937343-8c7a-4786-b065-b3509b06b968</id><first_name>Oana</first_name><last_name>Criste</last_name><year>1998</year></client><client><id>fa83a43b-ba4f-45c1-9ab9-745e659984d7</id><first_name>Antoniu</first_name><last_name>Craciun</last_name><year>198</year></client><client><id>6650019c-f0e4-4651-a917-1fd73ace1097</id><first_name>Freddy</first_name><last_name>Krueger</last_name><year>1986</year></client><client><id>c6f5455e-d369-43ed-af85-a2fb1632714a</id><first_name>John</first_name><last_name>Doe</last_name><year>1900</year></client></clients>
