@@ -32,13 +32,18 @@ public class Main {
         Validator<Client> clientValidator = new ClientValidator();
         Validator<Rental> rentalValidator = new RentalValidator();
 
-//        IRepository<UUID, Movie> movieRepo = new MovieXmlRepository(movieValidator, "data/movies.xml");
-//        IRepository<UUID, Client> clientRepo = new ClientXmlRepository(clientValidator, "data/clients.xml");
-//        IRepository<UUID, Rental> rentalRepo = new RentalXmlRepository(rentalValidator, "data/rentals.xml");
+        IRepository<UUID, Movie> movieRepo = new MovieXmlRepository(movieValidator, "data/movies.xml");
+        IRepository<UUID, Client> clientRepo = new ClientXmlRepository(clientValidator, "data/clients.xml");
+        IRepository<UUID, Rental> rentalRepo = new RentalXmlRepository(rentalValidator, "data/rentals.xml");
 
-        IRepository<UUID, Movie> movieRepo = new MovieDatabaseRepository(movieValidator);
-        IRepository<UUID, Client> clientRepo = new ClientDatabaseRepository(clientValidator);
-        IRepository<UUID, Rental> rentalRepo = new RentalDatabaseRepository(rentalValidator);
+//
+//        IRepository<UUID, Movie> movieRepo = new MovieFileRepository(movieValidator, "data/movies.txt");
+//        IRepository<UUID, Client> clientRepo = new ClientFileRepository(clientValidator, "data/clients.txt");
+//        IRepository<UUID, Rental> rentalRepo = new RentalFileRepository(rentalValidator, "data/rentals.txt");
+//
+//        IRepository<UUID, Movie> movieRepo = new MovieDatabaseRepository(movieValidator);
+//        IRepository<UUID, Client> clientRepo = new ClientDatabaseRepository(clientValidator);
+//        IRepository<UUID, Rental> rentalRepo = new RentalDatabaseRepository(rentalValidator);
         MovieController movieController = new MovieController(movieRepo);
         ClientController clientController = new ClientController(clientRepo);
         RentalController rentalController = new RentalController(rentalRepo);
