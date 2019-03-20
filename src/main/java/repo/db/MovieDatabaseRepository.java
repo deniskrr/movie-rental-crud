@@ -107,7 +107,7 @@ public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
 
     @Override
     public Optional<Movie> delete(UUID uuid) {
-        String sql = "delete from movie " +
+        String sql = "delete from movies " +
                 "where id=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
