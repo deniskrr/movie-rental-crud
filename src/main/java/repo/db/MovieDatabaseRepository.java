@@ -33,9 +33,11 @@ public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
                 " where id=?";
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+                PASSWORD)) {
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, uuid.toString());
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 UUID id = UUID.fromString(resultSet.getString("id"));
