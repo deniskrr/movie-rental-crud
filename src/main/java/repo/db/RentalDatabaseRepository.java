@@ -100,7 +100,7 @@ public class RentalDatabaseRepository implements IRepository<UUID, Rental> {
 
     @Override
     public Optional<Rental> delete(UUID uuid) {
-        String sql = "delete from rental " +
+        String sql = "delete from rentals " +
                 "where id=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
