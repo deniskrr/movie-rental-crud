@@ -101,7 +101,7 @@ public class ClientDatabaseRepository implements IRepository<UUID, Client> {
 
     @Override
     public Optional<Client> delete(UUID uuid) {
-        String sql = "delete from client " +
+        String sql = "delete from clients " +
                 "where id=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
