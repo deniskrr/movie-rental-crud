@@ -1,6 +1,6 @@
 package tcp;
 
-import common.Message;
+import domain.Message;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,42 +30,49 @@ public class TcpServer {
     }
 
     public void startServer() {
-        System.out.println("Starting server...");
-        try (ServerSocket serverSocket = new ServerSocket(port);) {
+        System.out.println("starting server");
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected");
+                System.out.println("client connected");
 
                 executorService.submit(new ClientHandler(clientSocket));
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("could not start server", e);
         }
     }
 
     private class ClientHandler implements Runnable {
         private Socket clientSocket;
 
-        public ClientHandler(Socket clientSocket) {
+        ClientHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
 
         @Override
         public void run() {
             try (InputStream is = clientSocket.getInputStream();
-                 OutputStream os = clientSocket.getOutputStream();
-            ) {
-                Message request = new Message();
-                request.readFrom(is);
+                 OutputStream os = clientSocket.getOutputStream()) {
 
-                System.out.println("Server - received request: " + request);
+                Message request = Message.builder().build();
+                request.readFrom(is);
+                System.out.println("server - received request: " + request);
+
                 Message response =
                         methodHandlers.get(request.getHeader()).apply(request);
 
-                System.out.println("Server - computed response: " + response);
+                System.out.println("server - computed response: " + response);
                 response.writeTo(os);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
+                throw new RuntimeException("server - data " +
+                        "exchange" +
+                        " " +
+                        "error", e);
             } finally {
                 if (clientSocket != null) {
                     try {
@@ -75,10 +82,6 @@ public class TcpServer {
                     }
                 }
             }
-
         }
-
-
     }
-
 }
