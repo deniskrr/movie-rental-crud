@@ -38,13 +38,8 @@ public class ServerApp {
 
         tcpServer.addHandler(MovieService.ADD_MOVIE, (request) -> {
             String movieRequest = request.getBody();
-            String[] movieParams = movieRequest.split(",");
-            Movie movie = new Movie(movieParams[0],
-                    Double.valueOf(movieParams[1]),
-                    Integer.valueOf(movieParams[2]),
-                    movieParams[3]);
             Future<String> result =
-                    movieService.addMovie(movie);
+                    movieService.addMovie(movieRequest);
             try {
                 return getMessage(Message.OK, result.get());
             } catch (InterruptedException | ExecutionException e) {
