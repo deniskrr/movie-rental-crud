@@ -30,10 +30,15 @@ public class MovieServiceServerImplementation implements MovieService {
     /**
      * Adds a movie to the repository.
      *
-     * @param movie to be added
+     * @param movieParams string containing the movie attributes
      * @throws ValidatorException - if the movie is not valid
      */
-    public Future<String> addMovie(Movie movie) throws ValidatorException {
+    public Future<String> addMovie(String movieParams) throws ValidatorException {
+        String[] movieParamsArray = movieParams.split(",");
+        Movie movie = new Movie(movieParamsArray[0],
+                Double.valueOf(movieParamsArray[1]),
+                Integer.valueOf(movieParamsArray[2]),
+                movieParamsArray[3]);
         return CompletableFuture.supplyAsync(() -> movieRepository.save(movie), executorService)
                 .thenApply((optional) -> {
                     if (optional.isPresent()) {
