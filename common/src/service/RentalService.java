@@ -1,4 +1,4 @@
 package service;
 
-public interface RentalService {
+public interface RentalService extends Service {
 }
