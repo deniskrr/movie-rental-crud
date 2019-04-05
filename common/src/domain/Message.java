@@ -3,18 +3,19 @@ package domain;
 import java.io.*;
 
 public class Message {
+    public static final String OK = "ok";
     public static final String ERROR = "error";
 
-    private static final String LINE_SEPARATOR = System.getProperty("line" +
-                                                                    ".separator");
+    private static final String LINE_SEPARATOR =
+            System.getProperty("line.separator");
 
     private String header;
     private String body;
 
-    public Message() {
+    private Message() {
     }
 
-    public Message(String header, String body) {
+    private Message(String header, String body) {
         this.header = header;
         this.body = body;
     }
@@ -27,12 +28,8 @@ public class Message {
         return body;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-               "header='" + header + '\'' +
-               ", body='" + body + '\'' +
-               '}';
+    public static MessageBuilder builder() {
+        return new MessageBuilder();
     }
 
     public void writeTo(OutputStream os) throws IOException {
@@ -44,5 +41,35 @@ public class Message {
 
         header = br.readLine();
         body = br.readLine();
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "header='" + header + '\'' +
+                ", body='" + body + '\'' +
+                '}';
+    }
+
+    public static class MessageBuilder {
+        private Message message;
+
+        MessageBuilder() {
+            message = new Message();
+        }
+
+        public MessageBuilder header(String header) {
+            this.message.header = header;
+            return this;
+        }
+
+        public MessageBuilder body(String body) {
+            this.message.body = body;
+            return this;
+        }
+
+        public Message build() {
+            return this.message;
+        }
     }
 }
