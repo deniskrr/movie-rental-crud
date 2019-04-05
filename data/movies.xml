@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><movies>
-    <movie>
-        <id>6b2f37cc-01c6-49c2-93b0-9f0af2968015</id>
-        <title>Denis Back</title>
-        <genre>Action</genre>
-        <year>2019</year>
-        <rating>10.0</rating>
-    </movie>
-<movie><id>56688f77-3f8d-443f-ab21-31a199a6ed42</id><title>Oana's Revenge</title><genre>Action</genre><year>1998</year><rating>10.0</rating></movie><movie><id>a7fa76db-46f8-4a0c-bbc6-2a97c9d80bfb</id><title>MPP </title><genre>Thriller</genre><year>2016</year><rating>5.0</rating></movie><movie><id>a46ad599-c785-4fca-bb9a-db3e9d25ea96</id><title>MPP 2</title><genre>Thriller</genre><year>2018</year><rating>10.0</rating></movie></movies>

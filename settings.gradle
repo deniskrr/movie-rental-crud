@@ -1,2 +1,6 @@
 rootProject.name = 'MPP'
+include 'server'
+include 'common'
+include 'common'
+include 'client'
 
