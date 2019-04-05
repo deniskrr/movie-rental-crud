@@ -1,36 +1,55 @@
-//package ui;
-//
-//import controller.ClientController;
-//import controller.MovieController;
-//import controller.RentalController;
-//import domain.Client;
-//import domain.Movie;
-//import domain.Rental;
-//import domain.Validator.InvalidCommandException;
-//import domain.Validator.ValidatorException;
-//
-//import java.util.List;
-//import java.util.Scanner;
-//import java.util.UUID;
-//import java.util.function.Predicate;
-//import java.util.stream.Collectors;
-//
-///**
-// * Class responsible for I/O operations
-// */
-//public class Console {
-//
-//    private Scanner scanner = new Scanner(System.in);
-//    private MovieController movieController;
-//    private ClientController clientController;
-//    private RentalController rentalController;
-//
-//    public Console(MovieController movieController, ClientController clientController, RentalController rentalController) {
-//        this.movieController = movieController;
-//        this.clientController = clientController;
-//        this.rentalController = rentalController;
-//    }
-//
+package ui;
+
+import service.MovieService;
+
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+
+/**
+ * Class responsible for I/O operations
+ */
+public class Console {
+
+    private Scanner scanner = new Scanner(System.in);
+    private MovieService movieService;
+
+
+    public Console(MovieService movieService) {
+        this.movieService = movieService;
+    }
+
+    public void run() {
+        while (true) {
+            printMenu();
+            int menuChoice = readInt();
+            switch (menuChoice) {
+                case 0:
+                    exit();
+                    break;
+                case 1:
+                    movieMenu();
+                    break;
+            }
+        }
+    }
+
+    private void movieMenu() {
+        printMovieMenu();
+        int choice = readInt();
+        switch (choice) {
+            case 1:
+                String movie = readMovie();
+                try {
+                    System.out.println("Client received result: " + movieService.addMovie(movie).get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+    }
+
+    //
 //    private Client readClient() {
 //        System.out.print("First name: ");
 //        String firstName = scanner.nextLine();
@@ -42,22 +61,29 @@
 //        return new Client(firstName, lastName, year);
 //    }
 //
-//    /**
-//     * Reads a movie from the user.
-//     * @return a new instance of {@link Movie}
-//     */
-//    private Movie readMovie() {
-//        System.out.print("Title: ");
-//        String title = scanner.nextLine();
-//        System.out.print("Rating: ");
-//        double rating = readDouble();
-//        System.out.print("Year: ");
-//        int year = readInt();
-//        System.out.print("Genre:");
-//        String genre = scanner.nextLine();
-//
-//        return new Movie(title, rating, year, genre);
-//    }
+
+    /**
+     * Reads a movie from the user.
+     *
+     * @return a movie parameters string
+     */
+    private String readMovie() {
+        String movie = "";
+        System.out.print("Title: ");
+        String title = scanner.nextLine();
+        movie += title + ",";
+        System.out.print("Rating: ");
+        double rating = readDouble();
+        movie += rating + ",";
+        System.out.print("Year: ");
+        int year = readInt();
+        movie += year + ",";
+        System.out.print("Genre:");
+        String genre = scanner.nextLine();
+        movie += "genre";
+
+        return movie;
+    }
 //
 //    private Rental readRental() {
 //        System.out.println("Choose the client:");
@@ -81,41 +107,45 @@
 //        return UUID.fromString(scanner.nextLine());
 //    }
 //
-//    /**
-//     * Reads an int.
-//     * @return the read int
-//     */
-//    private int readInt() {
-//        while (true) {
-//            int numChoice = 0;
-//            String choice = scanner.nextLine();
-//            try {
-//                numChoice = Integer.parseInt(choice);
-//                return numChoice;
-//            } catch (NumberFormatException e) {
-//                System.out.println("Invalid choice");
-//            }
+
+    /**
+     * Reads an int.
+     *
+     * @return the read int
+     */
+    private int readInt() {
+        while (true) {
+            int numChoice = 0;
+            String choice = scanner.nextLine();
+            try {
+                numChoice = Integer.parseInt(choice);
+                return numChoice;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice");
+            }
+
+        }
+    }
 //
-//        }
-//    }
-//
-//    /**
-//     * Reads a double.
-//     * @return the read double
-//     */
-//    private double readDouble() {
-//        while (true) {
-//            double numChoice = 0;
-//            String choice = scanner.nextLine();
-//            try {
-//                numChoice = Double.parseDouble(choice);
-//                return numChoice;
-//            } catch (NumberFormatException e) {
-//                System.out.println("Invalid choice");
-//            }
-//        }
-//    }
-//
+
+    /**
+     * Reads a double.
+     *
+     * @return the read double
+     */
+    private double readDouble() {
+        while (true) {
+            double numChoice = 0;
+            String choice = scanner.nextLine();
+            try {
+                numChoice = Double.parseDouble(choice);
+                return numChoice;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice");
+            }
+        }
+    }
+
 //    /**
 //     * Prints the movies.
 //     */
@@ -144,26 +174,26 @@
 //                System.out.println(movieController.getMovie(entry.getKey()).getTitle() + " - " + entry.getValue()));
 //    }
 //
-//    private void printMenu() {
-//        System.out.println("0. Exit");
-//        System.out.println("1. Movie menu");
-//        System.out.println("2. Client menu");
-//        System.out.println("3. Rental menu");
-//    }
-//
-//    /**
-//     * Prints the movie menu.
-//     */
-//    private void printMovieMenu() {
-//        System.out.println("1. Add movie");
-//        System.out.println("2. Print all movies");
-//        System.out.println("3. Filter movies");
-//        System.out.println("4. Find most popular genre");
-//        System.out.println("5. Sort by title");
-//        System.out.println("6. Delete movie");
-//        System.out.println("7  Print sorted movies after / before year");
-//    }
-//
+private void printMenu() {
+    System.out.println("0. Exit");
+    System.out.println("1. Movie menu");
+    System.out.println("2. Client menu");
+    System.out.println("3. Rental menu");
+}
+
+    /**
+     * Prints the movie menu.
+     */
+    private void printMovieMenu() {
+        System.out.println("1. Add movie");
+        System.out.println("2. Print all movies");
+        System.out.println("3. Filter movies");
+        System.out.println("4. Find most popular genre");
+        System.out.println("5. Sort by title");
+        System.out.println("6. Delete movie");
+        System.out.println("7  Print sorted movies after / before year");
+    }
+
 //    /**
 //     * Prints the movie menu.
 //     */
@@ -213,63 +243,7 @@
 //            }
 //        }
 //    }
-//
-//    private void movieMenu() {
-//        printMovieMenu();
-//        int choice = readInt();
-//        switch (choice) {
-//            case 1:
-//                Movie movie = readMovie();
-//                try {
-//                    movieController.addMovie(movie);
-//                } catch (ValidatorException e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                break;
-//            case 2:
-//                printMovies();
-//                break;
-//            case 3:
-//                printFilterMenu();
-//                int pred = readInt();
-//                Predicate<Movie> predicate = null;
-//                switch (pred) {
-//                    case 1:
-//                        predicate = Movie.isNiceMovie();
-//                        break;
-//                    case 2:
-//                        predicate = Movie.isSequel();
-//                        break;
-//                    case 3:
-//                        predicate = Movie.isOld();
-//                        break;
-//                    default:
-//                        throw new InvalidCommandException();
-//                }
-//                List<Movie> movieList = movieController.filterMovies(predicate);
-//                movieList.forEach(System.out::println);
-//                break;
-//            case 4:
-//                System.out.println(movieController.findMostPopularGenre());
-//                break;
-//            case 5:
-//                movieController.sortByTitle().forEach(System.out::println);
-//                break;
-//            case 6:
-//                UUID id = readID();
-//                System.out.print("ID: ");
-//                movieController.deleteMovie(id);
-//                break;
-//            case 7:
-//                System.out.print("Year:");
-//                int year = readInt();
-//                movieController.getSortedMoviesYear(year).forEach(System.out::println);
-//                break;
-//            default:
-//                throw new InvalidCommandException();
-//        }
-//    }
-//
+
 //    private void clientMenu() {
 //        printClientMenu();
 //        int choice = readInt();
@@ -322,8 +296,8 @@
 //        }
 //    }
 //
-//    private void exit() {
-//        System.out.println("Exit application.");
-//        System.exit(0);
-//    }
-//}
+private void exit() {
+    System.out.println("Exit application.");
+    System.exit(0);
+    }
+}
