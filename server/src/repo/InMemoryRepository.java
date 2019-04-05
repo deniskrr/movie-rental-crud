@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryRepository<T extends BaseEntity> implements IRepository<UUID, T> {
+public class InMemoryRepository<T extends BaseEntity> implements Repository<UUID, T> {
 
     private Map<UUID, T> entities;
     private Validator<T> validator;

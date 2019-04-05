@@ -2,12 +2,13 @@ package service;
 
 import domain.Movie;
 import domain.Validator.ValidatorException;
-import repo.IRepository;
+import repo.Repository;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.function.Predicate;
@@ -15,13 +16,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * Controller class containing the application functionality.
+ * Controller class responsible for CRUD operations on movie model
  */
 public class MovieServiceServerImplementation implements MovieService {
-    private IRepository<UUID, Movie> movieRepository;
+    private Repository<UUID, Movie> movieRepository;
     private ExecutorService executorService;
 
-    public MovieServiceServerImplementation(ExecutorService executorService, IRepository<UUID, Movie> movieRepository) {
+    public MovieServiceServerImplementation(ExecutorService executorService, Repository<UUID, Movie> movieRepository) {
         this.movieRepository = movieRepository;
         this.executorService = executorService;
     }
@@ -33,8 +34,14 @@ public class MovieServiceServerImplementation implements MovieService {
      * @throws ValidatorException - if the movie is not valid
      */
     public Future<String> addMovie(Movie movie) throws ValidatorException {
-        movieRepository.save(movie);
-        return null;
+        return CompletableFuture.supplyAsync(() -> movieRepository.save(movie), executorService)
+                .thenApply((optional) -> {
+                    if (optional.isPresent()) {
+                        return "Movie was added to the repository.";
+                    } else {
+                        return "Movie was NOT added to the repository.";
+                    }
+                });
     }
 
     public void deleteMovie(UUID id) {
@@ -55,12 +62,12 @@ public class MovieServiceServerImplementation implements MovieService {
     }
 
     public List<Movie> getMovies() {
-       return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        return StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     public String findMostPopularGenre() {
         return getMovies().stream()
-                .collect(Collectors.groupingBy(Movie::getGenre,Collectors.counting()))
+                .collect(Collectors.groupingBy(Movie::getGenre, Collectors.counting()))
                 .entrySet().stream().max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey).orElse(null);
     }

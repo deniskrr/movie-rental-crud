@@ -1,7 +1,7 @@
 package service;
 
 import domain.Rental;
-import repo.IRepository;
+import repo.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,9 +11,9 @@ import java.util.stream.StreamSupport;
 
 public class RentalServiceServerImplementation implements RentalService {
 
-    private IRepository<UUID, Rental> rentalRepository;
+    private Repository<UUID, Rental> rentalRepository;
 
-    public RentalServiceServerImplementation(IRepository<UUID, Rental> rentalRepository) {
+    public RentalServiceServerImplementation(Repository<UUID, Rental> rentalRepository) {
         this.rentalRepository = rentalRepository;
     }
 

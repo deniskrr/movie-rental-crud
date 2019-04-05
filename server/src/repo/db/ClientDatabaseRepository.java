@@ -3,7 +3,7 @@ package repo.db;
 import domain.Client;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
-import repo.IRepository;
+import repo.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ClientDatabaseRepository implements IRepository<UUID, Client> {
+public class ClientDatabaseRepository implements Repository<UUID, Client> {
     private static final String URL = "jdbc:postgresql://127.0.0.1:5433/Laboratory";
     private static final String USERNAME = System.getProperty("username");
     private static final String PASSWORD = System.getProperty("password");

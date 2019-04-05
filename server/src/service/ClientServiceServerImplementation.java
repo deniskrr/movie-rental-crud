@@ -3,7 +3,7 @@ package service;
 
 import domain.Client;
 import domain.Validator.ValidatorException;
-import repo.IRepository;
+import repo.Repository;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class ClientServiceServerImplementation implements ClientService {
-    private IRepository<UUID, Client> clientRepository;
+    private Repository<UUID, Client> clientRepository;
 
-    public ClientServiceServerImplementation(IRepository<UUID, Client> clientRepository) {
+    public ClientServiceServerImplementation(Repository<UUID, Client> clientRepository) {
         this.clientRepository = clientRepository;
     }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
  * Interface for generic CRUD operations on a repository for a specific type.
  *
  */
-public interface IRepository<ID, T extends BaseEntity> {
+public interface Repository<ID, T extends BaseEntity> {
     /**
      * Find the entity with the given {@code id}.
      *
