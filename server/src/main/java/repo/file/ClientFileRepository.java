@@ -33,12 +33,12 @@ public class ClientFileRepository extends InMemoryRepository<Client> {
             Files.lines(path).forEach(line -> {
                 List<String> items = Arrays.asList(line.split(","));
 
-               String firstName = items.get(1);
-               String lastname = items.get(2);
-               int yearOfBirth = Integer.parseInt(items.get(3));
+                String firstName = items.get(1);
+                String lastname = items.get(2);
+                int yearOfBirth = Integer.parseInt(items.get(3));
 
-               Client client = new Client(firstName, lastname, yearOfBirth);
-               client.setId(UUID.fromString(items.get(0)));
+                Client client = new Client(firstName, lastname, yearOfBirth);
+                client.setId(UUID.fromString(items.get(0)));
                 try {
                     super.save(client);
                 } catch (ValidatorException e) {

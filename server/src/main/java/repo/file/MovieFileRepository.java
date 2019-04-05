@@ -38,7 +38,7 @@ public class MovieFileRepository extends InMemoryRepository<Movie> {
                 int year = Integer.parseInt(items.get(3));
                 String genre = items.get(4);
 
-                Movie movie = new Movie(title, rating, year,genre);
+                Movie movie = new Movie(title, rating, year, genre);
                 movie.setId(UUID.fromString(items.get(0)));
                 try {
                     super.save(movie);

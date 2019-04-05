@@ -28,6 +28,15 @@ public class RentalXmlRepository extends XmlRepository<Rental> {
         }
     }
 
+    private static Rental createRental(Element rentalNode) {
+        Rental rental = new Rental();
+
+        rental.setId(UUID.fromString(getTextFromTagName(rentalNode, "id")));
+        rental.setClientID(UUID.fromString(getTextFromTagName(rentalNode, "client_id")));
+        rental.setMovieID(UUID.fromString(getTextFromTagName(rentalNode, "movie_id")));
+        return rental;
+    }
+
     @Override
     public Optional<Rental> save(Rental entity) throws ValidatorException {
         Optional<Rental> optionalRental = super.save(entity);
@@ -39,7 +48,7 @@ public class RentalXmlRepository extends XmlRepository<Rental> {
                     .parse("data/rentals.xml");
             Element root = document.getDocumentElement();
 
-            Element rentalElement = document.createElement( "rental");
+            Element rentalElement = document.createElement("rental");
             root.appendChild(rentalElement);
 
             appendChildWithText(document, rentalElement, "id",
@@ -61,7 +70,7 @@ public class RentalXmlRepository extends XmlRepository<Rental> {
         return optionalRental;
     }
 
-    public void loadData() throws Exception{
+    public void loadData() throws Exception {
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
 
@@ -80,14 +89,5 @@ public class RentalXmlRepository extends XmlRepository<Rental> {
 
             }
         }
-    }
-
-    private static Rental createRental(Element rentalNode) {
-        Rental rental = new Rental();
-
-        rental.setId(UUID.fromString(getTextFromTagName(rentalNode, "id")));
-        rental.setClientID(UUID.fromString(getTextFromTagName(rentalNode, "client_id")));
-        rental.setMovieID(UUID.fromString(getTextFromTagName(rentalNode, "movie_id")));
-        return rental;
     }
 }

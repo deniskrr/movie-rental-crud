@@ -28,6 +28,17 @@ public class MovieXmlRepository extends XmlRepository<Movie> {
         }
     }
 
+    private static Movie createMovie(Element movieNode) {
+        Movie movie = new Movie();
+
+        movie.setId(UUID.fromString(getTextFromTagName(movieNode, "id")));
+        movie.setTitle(getTextFromTagName(movieNode, "title"));
+        movie.setGenre(getTextFromTagName(movieNode, "genre"));
+        movie.setRating(Double.valueOf(getTextFromTagName(movieNode, "rating")));
+        movie.setYear(Integer.valueOf(getTextFromTagName(movieNode, "year")));
+        return movie;
+    }
+
     @Override
     public Optional<Movie> save(Movie entity) throws ValidatorException {
         Optional<Movie> optionalMovie = super.save(entity);
@@ -62,7 +73,7 @@ public class MovieXmlRepository extends XmlRepository<Movie> {
         return optionalMovie;
     }
 
-    public void loadData() throws Exception{
+    public void loadData() throws Exception {
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
 
@@ -81,16 +92,5 @@ public class MovieXmlRepository extends XmlRepository<Movie> {
 
             }
         }
-    }
-
-    private static Movie createMovie(Element movieNode) {
-        Movie movie = new Movie();
-
-        movie.setId(UUID.fromString(getTextFromTagName(movieNode, "id")));
-        movie.setTitle(getTextFromTagName(movieNode, "title"));
-        movie.setGenre(getTextFromTagName(movieNode, "genre"));
-        movie.setRating(Double.valueOf(getTextFromTagName(movieNode, "rating")));
-        movie.setYear(Integer.valueOf(getTextFromTagName(movieNode, "year")));
-        return movie;
     }
 }

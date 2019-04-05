@@ -29,6 +29,16 @@ public class ClientXmlRepository extends XmlRepository<Client> {
         }
     }
 
+    private static Client createClient(Element clientNode) {
+        Client client = new Client();
+
+        client.setId(UUID.fromString(getTextFromTagName(clientNode, "id")));
+        client.setFirstName(getTextFromTagName(clientNode, "first_name"));
+        client.setLastName(getTextFromTagName(clientNode, "last_name"));
+        client.setYearOfBirth(Integer.valueOf(getTextFromTagName(clientNode, "year")));
+        return client;
+    }
+
     @Override
     public Optional<Client> save(Client entity) throws ValidatorException {
         Optional<Client> optionalClient = super.save(entity);
@@ -79,15 +89,5 @@ public class ClientXmlRepository extends XmlRepository<Client> {
 
             }
         }
-    }
-
-    private static Client createClient(Element clientNode) {
-        Client client = new Client();
-
-        client.setId(UUID.fromString(getTextFromTagName(clientNode, "id")));
-        client.setFirstName(getTextFromTagName(clientNode, "first_name"));
-        client.setLastName(getTextFromTagName(clientNode, "last_name"));
-        client.setYearOfBirth(Integer.valueOf(getTextFromTagName(clientNode, "year")));
-        return client;
     }
 }
