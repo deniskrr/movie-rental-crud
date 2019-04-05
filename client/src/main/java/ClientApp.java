@@ -2,8 +2,8 @@ import service.MovieService;
 import service.MovieServiceClientImplementation;
 import service.Service;
 import tcp.TcpClient;
+import ui.Console;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,11 +16,8 @@ public class ClientApp {
 
         MovieService movieService = new MovieServiceClientImplementation(executorService, tcpClient);
 
-        try {
-            movieService.addMovie("Deniiiis,10,1998,Action").get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        Console console = new Console(movieService);
+        console.run();
 
         executorService.shutdown();
 
