@@ -1,7 +1,5 @@
-package controller;
+package service;
 
-import domain.Client;
-import domain.Movie;
 import domain.Rental;
 import repo.IRepository;
 
@@ -11,11 +9,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class RentalController {
+public class RentalServiceServerImplementation implements RentalService {
 
     private IRepository<UUID, Rental> rentalRepository;
 
-    public RentalController(IRepository<UUID, Rental> rentalRepository) {
+    public RentalServiceServerImplementation(IRepository<UUID, Rental> rentalRepository) {
         this.rentalRepository = rentalRepository;
     }
 

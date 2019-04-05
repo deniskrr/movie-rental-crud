@@ -1,10 +1,15 @@
-package controller;
+package service;
 
 import domain.Movie;
 import domain.Validator.ValidatorException;
 import repo.IRepository;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -12,11 +17,13 @@ import java.util.stream.StreamSupport;
 /**
  * Controller class containing the application functionality.
  */
-public class MovieController {
+public class MovieServiceServerImplementation implements MovieService {
     private IRepository<UUID, Movie> movieRepository;
+    private ExecutorService executorService;
 
-    public MovieController(IRepository<UUID, Movie> movieRepository) {
+    public MovieServiceServerImplementation(ExecutorService executorService, IRepository<UUID, Movie> movieRepository) {
         this.movieRepository = movieRepository;
+        this.executorService = executorService;
     }
 
     /**
@@ -25,8 +32,9 @@ public class MovieController {
      * @param movie to be added
      * @throws ValidatorException - if the movie is not valid
      */
-    public void addMovie(Movie movie) throws ValidatorException {
+    public Future<String> addMovie(Movie movie) throws ValidatorException {
         movieRepository.save(movie);
+        return null;
     }
 
     public void deleteMovie(UUID id) {
