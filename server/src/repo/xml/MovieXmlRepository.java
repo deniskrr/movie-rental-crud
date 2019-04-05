@@ -1,7 +1,6 @@
 package repo.xml;
 
 import domain.Movie;
-import domain.Movie;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
 import org.w3c.dom.Document;

@@ -1,8 +1,6 @@
 package repo.db;
 
-import domain.Movie;
-import domain.Movie;
-import domain.Movie;
+import domain.Rental;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
 import repo.IRepository;
@@ -13,23 +11,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
-public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
+public class RentalDatabaseRepository implements IRepository<UUID, Rental> {
     private static final String URL = "jdbc:postgresql://127.0.0.1:5433/Laboratory";
     private static final String USERNAME = System.getProperty("username");
     private static final String PASSWORD = System.getProperty("password");
 
-    private Validator<Movie> validator;
+    private Validator<Rental> validator;
 
-    public MovieDatabaseRepository(Validator<Movie> validator) {
+    public RentalDatabaseRepository(Validator<Rental> validator) {
         this.validator = validator;
     }
 
-
     @Override
-    public Optional<Movie> findOne(UUID uuid) {
-        Movie movie = null;
-        String sql = "select * from Movies" +
+    public Optional<Rental> findOne(UUID uuid) {
+        Rental rental = null;
+        String sql = "select * from Rentals" +
                 " where id=?";
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
@@ -41,24 +37,23 @@ public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
 
             if (resultSet.next()) {
                 UUID id = UUID.fromString(resultSet.getString("id"));
-                String title = resultSet.getString("title");
-                double rating = resultSet.getDouble("rating");
-                int year = resultSet.getInt("year");
-                String genre = resultSet.getString("genre");
+                UUID client_id = UUID.fromString(resultSet.getString("client_id"));
+                UUID movie_id = UUID.fromString(resultSet.getString("movie_id"));
 
-                movie = new Movie(title, rating, year, genre);
-                movie.setId(id);
+
+                rental = new Rental(client_id, movie_id);
+                rental.setId(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return Optional.ofNullable(movie);
+        return Optional.ofNullable(rental);
     }
 
     @Override
-    public Iterable<Movie> findAll() {
-        List<Movie> movies = new ArrayList<>();
-        String sql = "select * from Movies";
+    public Iterable<Rental> findAll() {
+        List<Rental> rentals = new ArrayList<>();
+        String sql = "select * from Rentals";
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
@@ -67,37 +62,32 @@ public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
 
             while (resultSet.next()) {
                 UUID id = UUID.fromString(resultSet.getString("id"));
-                String title = resultSet.getString("title");
-                double rating = resultSet.getDouble("rating");
-                int year = resultSet.getInt("year");
-                String genre = resultSet.getString("genre");
+                UUID client_id = UUID.fromString(resultSet.getString("client_id"));
+                UUID movie_id = UUID.fromString(resultSet.getString("movie_id"));
 
-
-                Movie movie = new Movie(title, rating, year, genre);
-                movie.setId(id);
-                movies.add(movie);
+                Rental rental = new Rental(client_id, movie_id);
+                rental.setId(id);
+                rentals.add(rental);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return movies;
+        return rentals;
     }
 
     @Override
-    public Optional<Movie> save(Movie entity) throws ValidatorException {
+    public Optional<Rental> save(Rental entity) throws ValidatorException {
         validator.validate(entity);
 
-        String sql = "insert into movies(id,title, rating, year, genre) " +
-                "values (?,?,?,?,?)";
+        String sql = "insert into rentals(id,client_id, movie_id) " +
+                "values (?,?,?)";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, entity.getId().toString());
-            statement.setString(2, entity.getTitle());
-            statement.setDouble(3, entity.getRating());
-            statement.setInt(4, entity.getYear());
-            statement.setString(5, entity.getGenre());
+            statement.setString(2, entity.getClientID().toString());
+            statement.setString(3, entity.getMovieID().toString());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -108,8 +98,8 @@ public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
     }
 
     @Override
-    public Optional<Movie> delete(UUID uuid) {
-        String sql = "delete from movies " +
+    public Optional<Rental> delete(UUID uuid) {
+        String sql = "delete from rentals " +
                 "where id=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
@@ -126,17 +116,15 @@ public class MovieDatabaseRepository implements IRepository<UUID, Movie> {
     }
 
     @Override
-    public Optional<Movie> update(Movie entity) throws ValidatorException {
-        String sql = "update movie set title=?, rating=?, year=?, genre=? where id=?";
+    public Optional<Rental> update(Rental entity) throws ValidatorException {
+        String sql = "update rental set client_id=?, movie_id=? where id=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
                 PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, entity.getTitle());
-            statement.setDouble(2, entity.getRating());
-            statement.setInt(3, entity.getYear());
-            statement.setString(4, entity.getGenre());
-            statement.setString(5, entity.getId().toString());
+            statement.setString(1, entity.getClientID().toString());
+            statement.setString(2, entity.getMovieID().toString());
+            statement.setString(3, entity.getId().toString());
 
             statement.executeUpdate();
         } catch (SQLException e) {

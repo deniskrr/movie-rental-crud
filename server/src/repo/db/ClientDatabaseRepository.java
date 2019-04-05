@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ClientDatabaseRepository implements IRepository<UUID, Client> {
     private static final String URL = "jdbc:postgresql://127.0.0.1:5433/Laboratory";
