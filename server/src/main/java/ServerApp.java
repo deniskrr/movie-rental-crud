@@ -33,7 +33,6 @@ public class ServerApp {
         System.setProperty("username", "postgres");
         System.setProperty("password", "2233");
         Repository<UUID, Movie> movieRepo = new MovieDatabaseRepository(movieValidator);
-
         MovieServiceServerImplementation movieService = new MovieServiceServerImplementation(executorService, movieRepo);
 
         tcpServer.addHandler(MovieService.ADD_MOVIE, (request) -> {
