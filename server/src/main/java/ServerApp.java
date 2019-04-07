@@ -33,7 +33,9 @@ public class ServerApp {
         System.setProperty("username", "postgres");
         System.setProperty("password", "2233");
         Repository<UUID, Movie> movieRepo = new MovieDatabaseRepository(movieValidator);
+        Repository<UUID, Client> clientRepository = new ClientDatabaseRepository(clientValidator);
         MovieServiceServerImplementation movieService = new MovieServiceServerImplementation(executorService, movieRepo);
+        ClientServiceServerImplementation clientService = new ClientServiceServerImplementation(executorService, clientRepository);
 
         tcpServer.addHandler(MovieService.ADD_MOVIE, (request) -> {
             String movieRequest = request.getBody();
@@ -72,6 +74,43 @@ public class ServerApp {
             }
         });
 
+        tcpServer.addHandler(ClientService.ADD_CLIENT, (request) -> {
+            String clientRequest = request.getBody();
+            Future<String> result =
+                    clientService.addClient(clientRequest);
+            try {
+                return getMessage(Message.OK, result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return getMessage(Message.ERROR, e.getMessage());
+            }
+
+        });
+
+        tcpServer.addHandler(ClientService.DELETE_CLIENT, (request) -> {
+            String id = request.getBody();
+            Future<String> result =
+                    clientService.deleteClient(UUID.fromString(id));
+            try {
+                return getMessage(Message.OK, result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return getMessage(Message.ERROR, e.getMessage());
+            }
+        });
+
+        tcpServer.addHandler(ClientService.GET_CLIENT, (request) -> {
+            String id = request.getBody();
+            Future<String> result =
+                    clientService.getClient(UUID.fromString(id));
+            try {
+                return getMessage(Message.OK, result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return getMessage(Message.ERROR, e.getMessage());
+            }
+        });
+
         tcpServer.startServer();
     }
 
@@ -82,4 +121,5 @@ public class ServerApp {
                 .body(body)
                 .build();
     }
+
 }
