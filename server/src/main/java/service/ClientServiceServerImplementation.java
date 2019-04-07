@@ -7,18 +7,35 @@ import repo.Repository;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class ClientServiceServerImplementation implements ClientService {
     private Repository<UUID, Client> clientRepository;
+    private ExecutorService executorService;
 
-    public ClientServiceServerImplementation(Repository<UUID, Client> clientRepository) {
+    public ClientServiceServerImplementation(ExecutorService executorService, Repository<UUID, Client> clientRepository) {
+        this.executorService = executorService;
         this.clientRepository = clientRepository;
     }
 
-    public void addClient(Client client) throws ValidatorException {
-        clientRepository.save(client);
+    public Future<String> addClient(String clientParams) throws ValidatorException {
+        String[] clientParamsArray = clientParams.split(",");
+        Client client = new Client(clientParamsArray[0],
+                clientParamsArray[1],
+                Integer.valueOf(clientParamsArray[2]));
+        return CompletableFuture.supplyAsync(() -> clientRepository.save(client), executorService)
+                .thenApply((optional) -> {
+                    if (optional.isPresent()) {
+                        return "Client was added to the repository.";
+                    } else {
+                        return "Client was NOT added to the repository.";
+                    }
+                });
+
     }
 
     public void deleteClient(UUID id) {
