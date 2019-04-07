@@ -13,10 +13,12 @@ public class Console {
 
     private Scanner scanner = new Scanner(System.in);
     private MovieService movieService;
+    private ClientService clientService;
 
 
-    public Console(MovieService movieService) {
+    public Console(MovieService movieService, ClientService clientService) {
         this.movieService = movieService;
+        this.clientService = clientService;
     }
 
     public void run() {
@@ -29,6 +31,9 @@ public class Console {
                     break;
                 case 1:
                     movieMenu();
+                    break;
+                case 2:
+                    clientMenu();
                     break;
             }
         }
@@ -57,18 +62,48 @@ public class Console {
 
     }
 
-    //
-//    private Client readClient() {
-//        System.out.print("First name: ");
-//        String firstName = scanner.nextLine();
-//        System.out.print("Last name ");
-//        String lastName = scanner.nextLine();
-//        System.out.print("Year:");
-//        int year = readInt();
-//
-//        return new Client(firstName, lastName, year);
-//    }
-//
+    private void clientMenu()
+    {
+        printClientMenu();
+        int choice = readInt();
+        switch (choice)
+        {
+            case 1:
+                String client = readClient();
+                try
+                {
+                    clientService.addClient(client).get();
+                }
+                catch (InterruptedException | ExecutionException e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                String id = scanner.nextLine();
+                try {
+                    clientService.deleteClient(UUID.fromString(id)).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+
+    private String readClient() {
+        String client = "";
+        System.out.print("First name: ");
+        String firstName = scanner.nextLine();
+        client += firstName + ", ";
+        System.out.print("Last name ");
+        String lastName = scanner.nextLine();
+        client += lastName + ", ";
+        System.out.print("Year:");
+        int year = readInt();
+        client += year;
+
+        return client;
+    }
+
 
     /**
      * Reads a movie from the user.
@@ -201,12 +236,13 @@ private void printMenu() {
 //    /**
 //     * Prints the movie menu.
 //     */
-//    private void printClientMenu() {
-//        System.out.println("1. Add client");
-//        System.out.println("2. Print all clients");
-//        System.out.println("3. Delete client");
-//    }
-//
+
+    private void printClientMenu() {
+        System.out.println("1. Add client");
+        System.out.println("2. Print all clients");
+        System.out.println("3. Delete client");
+    }
+
 //    private void printRentalMenu() {
 //        System.out.println("1. Rent a movie");
 //        System.out.println("2. Print all rentals");
