@@ -240,8 +240,8 @@ private void printMenu() {
 
     private void printClientMenu() {
         System.out.println("1. Add client");
-        System.out.println("2. Print all clients");
-        System.out.println("3. Delete client");
+        System.out.println("2. Delete client");
+        System.out.println("3. Get client");
     }
 
 //    private void printRentalMenu() {
