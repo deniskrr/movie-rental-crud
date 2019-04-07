@@ -4,14 +4,11 @@ import domain.Movie;
 import domain.Validator.ValidatorException;
 import repo.Repository;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -49,40 +46,36 @@ public class MovieServiceServerImplementation implements MovieService {
                 });
     }
 
-    public void deleteMovie(UUID id) {
-        movieRepository.delete(id);
+    public Future<String> deleteMovie(UUID id) {
+        return CompletableFuture.supplyAsync(() -> movieRepository.delete(id), executorService)
+                .thenApply((optional) -> {
+                    if (optional.isPresent()) {
+                        if (optional.get() == true) {
+                            return "Movie was deleted from the repository";
+                        } else {
+                            return "Movie was not found in the repository";
+                        }
+                    } else {
+                        return "Movie was NOT deleted from the repository";
+                    }
+                });
     }
 
-    public Movie getMovie(UUID id) {
-        if (movieRepository.findOne(id).isPresent()) {
-            return movieRepository.findOne(id).get();
-        }
-        return null;
-    }
-
-    public List<Movie> getSortedMoviesYear(int year) {
-        List<Movie> initial = getMovies().stream().filter(movie -> movie.getYear() > year).sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
-        getMovies().stream().filter(movie -> movie.getYear() < year).sorted(Comparator.comparing(Movie::getTitle).reversed()).forEach(initial::add);
-        return initial;
+    public Future<String> getMovie(UUID id) {
+        return CompletableFuture.supplyAsync(() -> movieRepository.findOne(id), executorService)
+                .thenApply((optional) -> {
+                    if (optional.isPresent()) {
+                        return optional.get().toString();
+                    } else {
+                        return "Movie not found";
+                    }
+                });
     }
 
     public List<Movie> getMovies() {
         return StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
-    public String findMostPopularGenre() {
-        return getMovies().stream()
-                .collect(Collectors.groupingBy(Movie::getGenre, Collectors.counting()))
-                .entrySet().stream().max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).orElse(null);
-    }
 
-    public List<Movie> filterMovies(Predicate<Movie> predicate) {
-        return getMovies().stream().filter(predicate).collect(Collectors.toList());
-    }
-
-    public List<Movie> sortByTitle() {
-        return getMovies().stream().sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
-    }
 
 }

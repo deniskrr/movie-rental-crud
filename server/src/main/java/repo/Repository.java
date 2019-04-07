@@ -37,10 +37,10 @@ public interface Repository<ID, T extends BaseEntity> {
      * Removes the entity with the given id.
      *
      * @param id must not be null.
-     * @return an {@code Optional} - null if there is no entity with the given id, otherwise the removed entity.
+     * @return an {@code Optional} - false if there is no entity with the given id, true if the entity was removed.
      * @throws IllegalArgumentException if the given id is null.
      */
-    Optional<T> delete(ID id);
+    Optional<Boolean> delete(ID id);
 
     /**
      * Updates the given entity.

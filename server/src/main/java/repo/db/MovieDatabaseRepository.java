@@ -106,7 +106,7 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
     }
 
     @Override
-    public Optional<Movie> delete(UUID uuid) {
+    public Optional<Boolean> delete(UUID uuid) {
         String sql = "delete from movies " +
                 "where id=?";
         try (Connection connection = DriverManager.getConnection(URL, USERNAME,
@@ -115,12 +115,15 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
 
             statement.setString(1, uuid.toString());
 
-            statement.executeUpdate();
+            if (statement.executeUpdate() > 0) {
+                return Optional.of(true);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        return Optional.of(false);
     }
 
     @Override
