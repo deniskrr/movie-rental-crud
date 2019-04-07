@@ -53,11 +53,16 @@ public class ClientServiceServerImplementation implements ClientService {
                 });
     }
 
-    public Client getClient(UUID id) {
-        if (clientRepository.findOne(id).isPresent()) {
-            return clientRepository.findOne(id).get();
-        }
-        return null;
+
+    public Future<String> getClient(UUID id) {
+        return CompletableFuture.supplyAsync(() -> clientRepository.findOne(id), executorService)
+                .thenApply((optional) -> {
+                    if (optional.isPresent()) {
+                        return optional.get().toString();
+                    } else {
+                        return "Client not found";
+                    }
+                });
     }
 
     public List<Client> getClients() {
