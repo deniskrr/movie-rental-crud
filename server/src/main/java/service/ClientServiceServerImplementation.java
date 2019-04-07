@@ -38,8 +38,19 @@ public class ClientServiceServerImplementation implements ClientService {
 
     }
 
-    public void deleteClient(UUID id) {
-        clientRepository.delete(id);
+    public Future<String> deleteClient(UUID id) {
+        return CompletableFuture.supplyAsync(() -> clientRepository.delete(id), executorService)
+                .thenApply((optional) -> {
+                    if (optional.isPresent()) {
+                        if (optional.get() == true) {
+                            return "Client was deleted from the repository";
+                        } else {
+                            return "Client was not found in the repository";
+                        }
+                    } else {
+                        return "Client was NOT deleted from the repository";
+                    }
+                });
     }
 
     public Client getClient(UUID id) {
