@@ -94,10 +94,10 @@ public class Console {
         String client = "";
         System.out.print("First name: ");
         String firstName = scanner.nextLine();
-        client += firstName + ", ";
+        client += firstName + ",";
         System.out.print("Last name ");
         String lastName = scanner.nextLine();
-        client += lastName + ", ";
+        client += lastName + ",";
         System.out.print("Year:");
         int year = readInt();
         client += year;
