@@ -1,6 +1,4 @@
-import service.MovieService;
-import service.MovieServiceClientImplementation;
-import service.Service;
+import service.*;
 import tcp.TcpClient;
 import ui.Console;
 
@@ -15,8 +13,9 @@ public class ClientApp {
         TcpClient tcpClient = new TcpClient(Service.SERVER_HOST, Service.SERVER_PORT);
 
         MovieService movieService = new MovieServiceClientImplementation(executorService, tcpClient);
+        ClientService clientService = new ClientServiceClientImplementation(executorService, tcpClient);
 
-        Console console = new Console(movieService);
+        Console console = new Console(movieService, clientService);
         console.run();
 
         executorService.shutdown();

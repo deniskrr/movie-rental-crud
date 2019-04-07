@@ -1,5 +1,6 @@
 package ui;
 
+import service.ClientService;
 import service.MovieService;
 
 import java.util.Scanner;
