@@ -3,6 +3,7 @@ package ui;
 import service.MovieService;
 
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -40,11 +41,18 @@ public class Console {
             case 1:
                 String movie = readMovie();
                 try {
-                    System.out.println("Client received result: " + movieService.addMovie(movie).get());
+                    movieService.addMovie(movie).get();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 break;
+            case 2:
+                String id = scanner.nextLine();
+                try {
+                    movieService.deleteMovie(UUID.fromString(id)).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
         }
 
     }
@@ -186,12 +194,8 @@ private void printMenu() {
      */
     private void printMovieMenu() {
         System.out.println("1. Add movie");
-        System.out.println("2. Print all movies");
-        System.out.println("3. Filter movies");
-        System.out.println("4. Find most popular genre");
-        System.out.println("5. Sort by title");
-        System.out.println("6. Delete movie");
-        System.out.println("7  Print sorted movies after / before year");
+        System.out.println("2. Delete movie");
+        System.out.println("3. Get movie");
     }
 
 //    /**

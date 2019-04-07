@@ -48,6 +48,30 @@ public class ServerApp {
 
         });
 
+        tcpServer.addHandler(MovieService.DELETE_MOVIE, (request) -> {
+            String id = request.getBody();
+            Future<String> result =
+                    movieService.deleteMovie(UUID.fromString(id));
+            try {
+                return getMessage(Message.OK, result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return getMessage(Message.ERROR, e.getMessage());
+            }
+        });
+
+        tcpServer.addHandler(MovieService.GET_MOVIE, (request) -> {
+            String id = request.getBody();
+            Future<String> result =
+                    movieService.getMovie(UUID.fromString(id));
+            try {
+                return getMessage(Message.OK, result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return getMessage(Message.ERROR, e.getMessage());
+            }
+        });
+
         tcpServer.startServer();
     }
 
