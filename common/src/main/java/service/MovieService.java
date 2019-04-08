@@ -14,4 +14,6 @@ public interface MovieService extends Service {
 
     Future<String> getMovie(UUID uid);
 
+    Future<String> getMovies();
+
 }

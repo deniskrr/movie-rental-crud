@@ -54,7 +54,7 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
     }
 
     @Override
-    public Iterable<Movie> findAll() {
+    public Optional<Iterable<Movie>> findAll() {
         List<Movie> movies = new ArrayList<>();
         String sql = "select * from Movies";
 
@@ -78,7 +78,7 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return movies;
+        return Optional.of(movies);
     }
 
     @Override

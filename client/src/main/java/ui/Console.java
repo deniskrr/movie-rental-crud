@@ -43,40 +43,40 @@ public class Console {
     private void movieMenu() {
         printMovieMenu();
         int choice = readInt();
-        switch (choice) {
-            case 1:
-                String movie = readMovie();
-                try {
-                    movieService.addMovie(movie).get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 2:
-                String id = scanner.nextLine();
-                try {
-                    movieService.deleteMovie(UUID.fromString(id)).get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-        }
 
+        try {
+            switch (choice) {
+
+                case 1:
+                    String movie = readMovie();
+                    movieService.addMovie(movie).get();
+                    break;
+                case 2:
+                    String id = scanner.nextLine();
+                    movieService.deleteMovie(UUID.fromString(id)).get();
+                    break;
+                case 3:
+                    String movieId = scanner.nextLine();
+                    movieService.getMovie(UUID.fromString(movieId)).get();
+                    break;
+                case 4:
+                    movieService.getMovies().get();
+
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void clientMenu()
-    {
+    private void clientMenu() {
         printClientMenu();
         int choice = readInt();
-        switch (choice)
-        {
+        switch (choice) {
             case 1:
                 String client = readClient();
-                try
-                {
+                try {
                     clientService.addClient(client).get();
-                }
-                catch (InterruptedException | ExecutionException e)
-                {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -190,7 +190,7 @@ public class Console {
         }
     }
 
-//    /**
+    //    /**
 //     * Prints the movies.
 //     */
 //    private void printMovies() {
@@ -218,12 +218,12 @@ public class Console {
 //                System.out.println(movieController.getMovie(entry.getKey()).getTitle() + " - " + entry.getValue()));
 //    }
 //
-private void printMenu() {
-    System.out.println("0. Exit");
-    System.out.println("1. Movie menu");
-    System.out.println("2. Client menu");
-    System.out.println("3. Rental menu");
-}
+    private void printMenu() {
+        System.out.println("0. Exit");
+        System.out.println("1. Movie menu");
+        System.out.println("2. Client menu");
+        System.out.println("3. Rental menu");
+    }
 
     /**
      * Prints the movie menu.
@@ -285,7 +285,7 @@ private void printMenu() {
 //        }
 //    }
 
-//    private void clientMenu() {
+    //    private void clientMenu() {
 //        printClientMenu();
 //        int choice = readInt();
 //        switch (choice) {
@@ -337,8 +337,8 @@ private void printMenu() {
 //        }
 //    }
 //
-private void exit() {
-    System.out.println("Exit application.");
-    System.exit(0);
+    private void exit() {
+        System.out.println("Exit application.");
+        System.exit(0);
     }
 }

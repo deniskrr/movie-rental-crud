@@ -72,10 +72,18 @@ public class MovieServiceServerImplementation implements MovieService {
                 });
     }
 
-    public List<Movie> getMovies() {
-        return StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
+    public Future<String> getMovies() {
+        return CompletableFuture.supplyAsync(() -> movieRepository.findAll(), executorService)
+                .thenApply((optional) -> {
+                    String movies = "";
+                    if (optional.isPresent()) {
+                        for (Movie movie : optional.get()) {
+                            movies += movie.toString() + ";";
+                        }
+                    }
+                    return movies;
+                });
     }
-
 
 
 }

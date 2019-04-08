@@ -25,14 +25,5 @@ public class RentalServiceServerImplementation implements RentalService {
         this.rentalRepository.delete(id);
     }
 
-    public List<Rental> getRentals() {
-        return StreamSupport.stream(rentalRepository.findAll().spliterator(), false).collect(Collectors.toList());
-    }
 
-    public UUID getMostRentedMovie() {
-        return getRentals().stream()
-                .collect(Collectors.groupingBy(Rental::getMovieID, Collectors.counting()))
-                .entrySet().stream().max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).orElse(null);
-    }
 }

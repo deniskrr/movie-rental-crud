@@ -49,32 +49,39 @@ public class ClientDatabaseRepository implements Repository<UUID, Client> {
         }
         return Optional.ofNullable(client);
     }
+//
 
     @Override
-    public Iterable<Client> findAll() {
-        List<Client> clients = new ArrayList<>();
-        String sql = "select * from Clients";
-
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                UUID id = UUID.fromString(resultSet.getString("id"));
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                int year = resultSet.getInt("year");
-
-                Client client = new Client(firstName, lastName, year);
-                client.setId(id);
-                clients.add(client);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return clients;
+    public Optional<Iterable<Client>> findAll() {
+        return Optional.empty();
     }
+
+
+//    @Override
+//    public Iterable<Client> findAll() {
+//        List<Client> clients = new ArrayList<>();
+//        String sql = "select * from Clients";
+//
+//        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
+//                PASSWORD);
+//             PreparedStatement statement = connection.prepareStatement(sql);
+//             ResultSet resultSet = statement.executeQuery()) {
+//
+//            while (resultSet.next()) {
+//                UUID id = UUID.fromString(resultSet.getString("id"));
+//                String firstName = resultSet.getString("first_name");
+//                String lastName = resultSet.getString("last_name");
+//                int year = resultSet.getInt("year");
+//
+//                Client client = new Client(firstName, lastName, year);
+//                client.setId(id);
+//                clients.add(client);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return clients;
+//    }
 
     @Override
     public Optional<Client> save(Client entity) throws ValidatorException {

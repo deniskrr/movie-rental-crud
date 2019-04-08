@@ -65,8 +65,5 @@ public class ClientServiceServerImplementation implements ClientService {
                 });
     }
 
-    public List<Client> getClients() {
-        return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toList());
-    }
 
 }

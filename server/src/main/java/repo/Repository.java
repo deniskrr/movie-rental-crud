@@ -21,7 +21,7 @@ public interface Repository<ID, T extends BaseEntity> {
     /**
      * @return all entities.
      */
-    Iterable<T> findAll();
+    Optional<Iterable<T>> findAll();
 
     /**
      * Saves the given entity.
