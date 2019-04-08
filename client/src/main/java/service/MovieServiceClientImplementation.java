@@ -61,4 +61,19 @@ public class MovieServiceClientImplementation implements MovieService {
             return result;
         });
     }
+
+    @Override
+    public Future<String> getMovies() {
+        return CompletableFuture.supplyAsync(() -> {
+
+            Message request = Message.builder()
+                    .header(MovieService.GET_MOVIE)
+                    .body("")
+                    .build();
+
+            Message response = tcpClient.sendAndReceive(request);
+            String result = response.getBody();
+            return result;
+        });
+    }
 }

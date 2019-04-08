@@ -77,6 +77,17 @@ public class ServerApp {
             }
         });
 
+        tcpServer.addHandler(MovieService.GET_MOVIE, (request) -> {
+            Future<String> result =
+                    movieService.getMovies();
+            try {
+                return getMessage(Message.OK, result.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return getMessage(Message.ERROR, e.getMessage());
+            }
+        });
+
         tcpServer.addHandler(ClientService.ADD_CLIENT, (request) -> {
             String clientRequest = request.getBody();
             Future<String> result =

@@ -29,8 +29,5 @@ public class RentalController {
 //        this.rentalRepository.delete(id);
     }
 
-    public List<Rental> getRentals() {
-        return StreamSupport.stream(rentalRepository.findAll().spliterator(), false).collect(Collectors.toList());
-    }
 
 }
