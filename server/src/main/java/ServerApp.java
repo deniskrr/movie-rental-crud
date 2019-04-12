@@ -77,7 +77,7 @@ public class ServerApp {
             }
         });
 
-        tcpServer.addHandler(MovieService.GET_MOVIE, (request) -> {
+        tcpServer.addHandler(MovieService.GET_MOVIES, (request) -> {
             Future<String> result =
                     movieService.getMovies();
             try {

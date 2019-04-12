@@ -67,7 +67,7 @@ public class MovieServiceClientImplementation implements MovieService {
         return CompletableFuture.supplyAsync(() -> {
 
             Message request = Message.builder()
-                    .header(MovieService.GET_MOVIE)
+                    .header(MovieService.GET_MOVIES)
                     .body("")
                     .build();
 
