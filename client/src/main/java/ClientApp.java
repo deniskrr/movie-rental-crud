@@ -1,5 +1,4 @@
 import service.*;
-import tcp.TcpClient;
 import ui.Console;
 
 import java.util.concurrent.ExecutorService;
@@ -10,10 +9,9 @@ public class ClientApp {
         ExecutorService executorService =
                 Executors.newFixedThreadPool(
                         Runtime.getRuntime().availableProcessors());
-        TcpClient tcpClient = new TcpClient(Service.SERVER_HOST, Service.SERVER_PORT);
 
-        MovieService movieService = new MovieServiceClientImplementation(executorService, tcpClient);
-        ClientService clientService = new ClientServiceClientImplementation(executorService, tcpClient);
+        MovieService movieService = new MovieServiceClientImplementation(executorService);
+        ClientService clientService = new ClientServiceClientImplementation(executorService);
 
         Console console = new Console(movieService, clientService);
         console.run();
