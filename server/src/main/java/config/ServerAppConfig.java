@@ -24,6 +24,7 @@ public class ServerAppConfig {
         RmiServiceExporter rmiServiceExporter = new RmiServiceExporter();
         rmiServiceExporter.setServiceName("MovieService");
         rmiServiceExporter.setServiceInterface(MovieService.class);
+        rmiServiceExporter.setService(movieService());
         return rmiServiceExporter;
     }
 
