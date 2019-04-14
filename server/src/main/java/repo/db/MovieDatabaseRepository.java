@@ -90,21 +90,12 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
     public Optional<Boolean> delete(UUID uuid) {
         String sql = "delete from movies " +
                 "where id=?";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, uuid.toString());
-
-            if (statement.executeUpdate() > 0) {
-                return Optional.of(true);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return Optional.empty();
+        try {
+            jdbcOperations.update(sql, uuid.toString());
+            return Optional.of(true);
+        } catch (DataAccessException e) {
+            return Optional.of(false);
         }
-
-        return Optional.of(false);
     }
 
     @Override
