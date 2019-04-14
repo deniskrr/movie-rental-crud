@@ -25,35 +25,6 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
     }
 
 
-//    @Override
-//    public Optional<Movie> findOne(UUID uuid) {
-//        Movie movie = null;
-//        String sql = "select * from Movies" +
-//                " where id=?";
-//
-//        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-//                PASSWORD)) {
-//
-//            PreparedStatement statement = connection.prepareStatement(sql);
-//            statement.setString(1, uuid.toString());
-//            ResultSet resultSet = statement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                UUID id = UUID.fromString(resultSet.getString("id"));
-//                String title = resultSet.getString("title");
-//                double rating = resultSet.getDouble("rating");
-//                int year = resultSet.getInt("year");
-//                String genre = resultSet.getString("genre");
-//
-//                movie = new Movie(title, rating, year, genre);
-//                movie.setId(id);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return Optional.ofNullable(movie);
-//    }
-
     @Override
     public List<Movie> findAll() {
         String sql = "select * from Movies";
