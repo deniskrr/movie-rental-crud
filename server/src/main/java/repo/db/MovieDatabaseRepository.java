@@ -101,22 +101,12 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
     @Override
     public Optional<Movie> update(Movie entity) throws ValidatorException {
         String sql = "update movie set title=?, rating=?, year=?, genre=? where id=?";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, entity.getTitle());
-            statement.setDouble(2, entity.getRating());
-            statement.setInt(3, entity.getYear());
-            statement.setString(4, entity.getGenre());
-            statement.setString(5, entity.getId().toString());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            jdbcOperations.update(
+                    sql, entity.getTitle(), entity.getRating(), entity.getYear(), entity.getGenre(), entity.getId());
+            return Optional.of(entity);
+        } catch (DataAccessException e) {
             return Optional.empty();
         }
-
-        return Optional.of(entity);
     }
 }
