@@ -4,6 +4,7 @@ import domain.Movie;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import repo.Repository;
 
@@ -76,22 +77,13 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
 
         String sql = "insert into movies(id,title, rating, year, genre) " +
                 "values (?,?,?,?,?)";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, entity.getId().toString());
-            statement.setString(2, entity.getTitle());
-            statement.setDouble(3, entity.getRating());
-            statement.setInt(4, entity.getYear());
-            statement.setString(5, entity.getGenre());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            jdbcOperations.update(
+                    sql, entity.getId(), entity.getTitle(), entity.getRating(), entity.getYear(), entity.getGenre());
+            return Optional.of(entity);
+        } catch (DataAccessException e) {
             return Optional.empty();
         }
-        return Optional.of(entity);
     }
 
     @Override
