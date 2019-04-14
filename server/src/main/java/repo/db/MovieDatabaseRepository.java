@@ -3,19 +3,19 @@ package repo.db;
 import domain.Movie;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
 import repo.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 
 public class MovieDatabaseRepository implements Repository<UUID, Movie> {
-    private static final String URL = "jdbc:postgresql://127.0.0.1:5433/Laboratory";
-    private static final String USERNAME = System.getProperty("username");
-    private static final String PASSWORD = System.getProperty("password");
+    @Autowired
+    private JdbcOperations jdbcOperations;
 
     private Validator<Movie> validator;
 
@@ -24,61 +24,50 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
     }
 
 
+//    @Override
+//    public Optional<Movie> findOne(UUID uuid) {
+//        Movie movie = null;
+//        String sql = "select * from Movies" +
+//                " where id=?";
+//
+//        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
+//                PASSWORD)) {
+//
+//            PreparedStatement statement = connection.prepareStatement(sql);
+//            statement.setString(1, uuid.toString());
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                UUID id = UUID.fromString(resultSet.getString("id"));
+//                String title = resultSet.getString("title");
+//                double rating = resultSet.getDouble("rating");
+//                int year = resultSet.getInt("year");
+//                String genre = resultSet.getString("genre");
+//
+//                movie = new Movie(title, rating, year, genre);
+//                movie.setId(id);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return Optional.ofNullable(movie);
+//    }
+
     @Override
-    public Optional<Movie> findOne(UUID uuid) {
-        Movie movie = null;
-        String sql = "select * from Movies" +
-                " where id=?";
-
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                UUID id = UUID.fromString(resultSet.getString("id"));
-                String title = resultSet.getString("title");
-                double rating = resultSet.getDouble("rating");
-                int year = resultSet.getInt("year");
-                String genre = resultSet.getString("genre");
-
-                movie = new Movie(title, rating, year, genre);
-                movie.setId(id);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.ofNullable(movie);
-    }
-
-    @Override
-    public Optional<Iterable<Movie>> findAll() {
-        List<Movie> movies = new ArrayList<>();
+    public List<Movie> findAll() {
         String sql = "select * from Movies";
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+        return jdbcOperations.query(sql, (rs, rowNum) -> {
+            UUID id = UUID.fromString(rs.getString("id"));
+            String title = rs.getString("title");
+            double rating = rs.getDouble("rating");
+            int year = rs.getInt("year");
+            String genre = rs.getString("genre");
 
-            while (resultSet.next()) {
-                UUID id = UUID.fromString(resultSet.getString("id"));
-                String title = resultSet.getString("title");
-                double rating = resultSet.getDouble("rating");
-                int year = resultSet.getInt("year");
-                String genre = resultSet.getString("genre");
-
-
-                Movie movie = new Movie(title, rating, year, genre);
-                movie.setId(id);
-                movies.add(movie);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.of(movies);
+            Movie movie = new Movie(title, rating, year, genre);
+            movie.setId(id);
+            return movie;
+        });
     }
 
     @Override
