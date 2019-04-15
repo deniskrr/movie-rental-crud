@@ -1,8 +1,10 @@
 package ui;
 
+import domain.Movie;
 import service.ClientService;
 import service.MovieService;
 
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -45,18 +47,29 @@ public class Console {
         int choice = readInt();
 
         switch (choice) {
-
             case 1:
                 String movie = readMovie();
-                movieService.addMovie(movie);
+                new Thread(() -> {
+
+                    Optional<Movie> opt = movieService.addMovie(movie);
+                    if (opt.isPresent()) {
+                        System.out.println("Movie was added to the repo.");
+                    } else {
+                        System.out.println("Movie was not added to the repo.");
+                    }
+                }).start();
                 break;
             case 2:
                 String id = scanner.nextLine();
-                movieService.deleteMovie(UUID.fromString(id));
+                new Thread(() -> {
+                    movieService.deleteMovie(UUID.fromString(id));
+                }).start();
                 break;
             case 3:
-                movieService.getMovies().forEach(System.out::println);
-
+                new Thread(() -> {
+                    movieService.getMovies().forEach(System.out::println);
+                }).start();
+                break;
         }
     }
 
