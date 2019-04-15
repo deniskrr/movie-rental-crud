@@ -6,6 +6,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class MovieServiceClientImplementation implements MovieService {
+    @Autowired
+    private MovieService movieService;
+
     private ExecutorService executorService;
 
     public MovieServiceClientImplementation(ExecutorService executorService) {
@@ -19,11 +22,6 @@ public class MovieServiceClientImplementation implements MovieService {
 
     @Override
     public Future<String> deleteMovie(UUID uid) {
-        return null;
-    }
-
-    @Override
-    public Future<String> getMovie(UUID uid) {
         return null;
     }
 

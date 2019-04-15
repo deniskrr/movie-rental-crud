@@ -56,10 +56,6 @@ public class Console {
                     movieService.deleteMovie(UUID.fromString(id)).get();
                     break;
                 case 3:
-                    String movieId = scanner.nextLine();
-                    movieService.getMovie(UUID.fromString(movieId)).get();
-                    break;
-                case 4:
                     movieService.getMovies().get();
 
             }

@@ -1,3 +1,4 @@
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import service.*;
 import ui.Console;
 
@@ -10,16 +11,17 @@ public class ClientApp {
                 Executors.newFixedThreadPool(
                         Runtime.getRuntime().availableProcessors());
 
-        MovieService movieService = new MovieServiceClientImplementation(executorService);
-        ClientService clientService = new ClientServiceClientImplementation(executorService);
 
-        Console console = new Console(movieService, clientService);
-        console.run();
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext("config"
+                );
 
-        executorService.shutdown();
+        MovieServiceClientImplementation movieService = (MovieServiceClientImplementation)
+                context.getBean("clientImplementation");
 
-        System.out.println("Client exit");
+        ClientServiceClientImplementation clientService = new ClientServiceClientImplementation(executorService);
 
-
+        Console ui = new Console(movieService, clientService);
+        ui.run();
     }
 }
