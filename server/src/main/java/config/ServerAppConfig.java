@@ -30,13 +30,9 @@ public class ServerAppConfig {
 
     @Bean
     MovieService movieService() {
-        ExecutorService executorService =
-                Executors.newFixedThreadPool(
-                        Runtime.getRuntime().availableProcessors());
-
         Validator<Movie> movieValidator = new MovieValidator();
         Repository<UUID, Movie> movieRepo = new MovieDatabaseRepository(movieValidator);
 
-        return new MovieServiceServerImplementation(executorService, movieRepo);
+        return new MovieServiceServerImplementation(movieRepo);
     }
 }
