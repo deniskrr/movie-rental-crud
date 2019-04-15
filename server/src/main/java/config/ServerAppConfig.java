@@ -29,10 +29,13 @@ public class ServerAppConfig {
     }
 
     @Bean
-    MovieService movieService() {
+    MovieDatabaseRepository getMovieRepo() {
         Validator<Movie> movieValidator = new MovieValidator();
-        Repository<UUID, Movie> movieRepo = new MovieDatabaseRepository(movieValidator);
+        return new MovieDatabaseRepository(movieValidator);
+    }
 
-        return new MovieServiceServerImplementation(movieRepo);
+    @Bean
+    MovieService movieService() {
+        return new MovieServiceServerImplementation(getMovieRepo());
     }
 }

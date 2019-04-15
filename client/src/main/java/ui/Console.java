@@ -55,7 +55,7 @@ public class Console {
                 movieService.deleteMovie(UUID.fromString(id));
                 break;
             case 3:
-                movieService.getMovies();
+                movieService.getMovies().forEach(System.out::println);
 
         }
     }
