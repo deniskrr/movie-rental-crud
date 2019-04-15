@@ -3,19 +3,20 @@ package repo.db;
 import domain.Movie;
 import domain.Validator.Validator;
 import domain.Validator.ValidatorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcOperations;
 import repo.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 
 public class MovieDatabaseRepository implements Repository<UUID, Movie> {
-    private static final String URL = "jdbc:postgresql://127.0.0.1:5433/Laboratory";
-    private static final String USERNAME = System.getProperty("username");
-    private static final String PASSWORD = System.getProperty("password");
+    @Autowired
+    private JdbcOperations jdbcOperations;
 
     private Validator<Movie> validator;
 
@@ -25,60 +26,20 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
 
 
     @Override
-    public Optional<Movie> findOne(UUID uuid) {
-        Movie movie = null;
-        String sql = "select * from Movies" +
-                " where id=?";
-
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD)) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                UUID id = UUID.fromString(resultSet.getString("id"));
-                String title = resultSet.getString("title");
-                double rating = resultSet.getDouble("rating");
-                int year = resultSet.getInt("year");
-                String genre = resultSet.getString("genre");
-
-                movie = new Movie(title, rating, year, genre);
-                movie.setId(id);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.ofNullable(movie);
-    }
-
-    @Override
-    public Optional<Iterable<Movie>> findAll() {
-        List<Movie> movies = new ArrayList<>();
+    public List<Movie> findAll() {
         String sql = "select * from Movies";
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+        return jdbcOperations.query(sql, (rs, rowNum) -> {
+            UUID id = UUID.fromString(rs.getString("id"));
+            String title = rs.getString("title");
+            double rating = rs.getDouble("rating");
+            int year = rs.getInt("year");
+            String genre = rs.getString("genre");
 
-            while (resultSet.next()) {
-                UUID id = UUID.fromString(resultSet.getString("id"));
-                String title = resultSet.getString("title");
-                double rating = resultSet.getDouble("rating");
-                int year = resultSet.getInt("year");
-                String genre = resultSet.getString("genre");
-
-
-                Movie movie = new Movie(title, rating, year, genre);
-                movie.setId(id);
-                movies.add(movie);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.of(movies);
+            Movie movie = new Movie(title, rating, year, genre);
+            movie.setId(id);
+            return movie;
+        });
     }
 
     @Override
@@ -87,64 +48,36 @@ public class MovieDatabaseRepository implements Repository<UUID, Movie> {
 
         String sql = "insert into movies(id,title, rating, year, genre) " +
                 "values (?,?,?,?,?)";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, entity.getId().toString());
-            statement.setString(2, entity.getTitle());
-            statement.setDouble(3, entity.getRating());
-            statement.setInt(4, entity.getYear());
-            statement.setString(5, entity.getGenre());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            jdbcOperations.update(
+                    sql, entity.getId(), entity.getTitle(), entity.getRating(), entity.getYear(), entity.getGenre());
+            return Optional.of(entity);
+        } catch (DataAccessException e) {
             return Optional.empty();
         }
-        return Optional.of(entity);
     }
 
     @Override
     public Optional<Boolean> delete(UUID uuid) {
         String sql = "delete from movies " +
                 "where id=?";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, uuid.toString());
-
-            if (statement.executeUpdate() > 0) {
-                return Optional.of(true);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return Optional.empty();
+        try {
+            jdbcOperations.update(sql, uuid.toString());
+            return Optional.of(true);
+        } catch (DataAccessException e) {
+            return Optional.of(false);
         }
-
-        return Optional.of(false);
     }
 
     @Override
     public Optional<Movie> update(Movie entity) throws ValidatorException {
         String sql = "update movie set title=?, rating=?, year=?, genre=? where id=?";
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME,
-                PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, entity.getTitle());
-            statement.setDouble(2, entity.getRating());
-            statement.setInt(3, entity.getYear());
-            statement.setString(4, entity.getGenre());
-            statement.setString(5, entity.getId().toString());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            jdbcOperations.update(
+                    sql, entity.getTitle(), entity.getRating(), entity.getYear(), entity.getGenre(), entity.getId());
+            return Optional.of(entity);
+        } catch (DataAccessException e) {
             return Optional.empty();
         }
-
-        return Optional.of(entity);
     }
 }

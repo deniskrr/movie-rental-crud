@@ -11,8 +11,6 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.postgresql/postgresql
-
-
+   
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

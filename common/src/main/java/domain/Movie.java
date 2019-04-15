@@ -1,11 +1,12 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.function.Predicate;
 
 /**
  * Class representing a movie entity
  */
-public class Movie extends BaseEntity {
+public class Movie extends BaseEntity implements Serializable {
 
     public static Predicate<Movie> isNiceMovie() {
         return p -> p.getRating() > 8.0;

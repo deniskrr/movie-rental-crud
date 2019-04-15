@@ -3,25 +3,26 @@ package repo;
 import domain.BaseEntity;
 import domain.Validator.ValidatorException;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Interface for generic CRUD operations on a repository for a specific type.
  */
 public interface Repository<ID, T extends BaseEntity> {
-    /**
-     * Find the entity with the given {@code id}.
-     *
-     * @param id must be not null.
-     * @return an {@code Optional} encapsulating the entity with the given id.
-     * @throws IllegalArgumentException if the given id is null.
-     */
-    Optional<T> findOne(ID id);
+//    /**
+//     * Find the entity with the given {@code id}.
+//     *
+//     * @param id must be not null.
+//     * @return an {@code Optional} encapsulating the entity with the given id.
+//     * @throws IllegalArgumentException if the given id is null.
+//     */
+//    Optional<T> findOne(ID id);
 
     /**
      * @return all entities.
      */
-    Optional<Iterable<T>> findAll();
+    List<T> findAll();
 
     /**
      * Saves the given entity.

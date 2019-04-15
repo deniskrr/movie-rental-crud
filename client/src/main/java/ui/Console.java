@@ -1,8 +1,10 @@
 package ui;
 
+import domain.Movie;
 import service.ClientService;
 import service.MovieService;
 
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -44,27 +46,30 @@ public class Console {
         printMovieMenu();
         int choice = readInt();
 
-        try {
-            switch (choice) {
+        switch (choice) {
+            case 1:
+                String movie = readMovie();
+                new Thread(() -> {
 
-                case 1:
-                    String movie = readMovie();
-                    movieService.addMovie(movie).get();
-                    break;
-                case 2:
-                    String id = scanner.nextLine();
-                    movieService.deleteMovie(UUID.fromString(id)).get();
-                    break;
-                case 3:
-                    String movieId = scanner.nextLine();
-                    movieService.getMovie(UUID.fromString(movieId)).get();
-                    break;
-                case 4:
-                    movieService.getMovies().get();
-
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+                    Optional<Movie> opt = movieService.addMovie(movie);
+                    if (opt.isPresent()) {
+                        System.out.println("Movie was added to the repo.");
+                    } else {
+                        System.out.println("Movie was not added to the repo.");
+                    }
+                }).start();
+                break;
+            case 2:
+                String id = scanner.nextLine();
+                new Thread(() -> {
+                    movieService.deleteMovie(UUID.fromString(id));
+                }).start();
+                break;
+            case 3:
+                new Thread(() -> {
+                    movieService.getMovies().forEach(System.out::println);
+                }).start();
+                break;
         }
     }
 
