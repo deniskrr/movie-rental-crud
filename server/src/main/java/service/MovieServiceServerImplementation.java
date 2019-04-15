@@ -15,11 +15,9 @@ import java.util.concurrent.ExecutorService;
  */
 public class MovieServiceServerImplementation implements MovieService {
     private Repository<UUID, Movie> movieRepository;
-    private ExecutorService executorService;
 
-    public MovieServiceServerImplementation(ExecutorService executorService, Repository<UUID, Movie> movieRepository) {
+    public MovieServiceServerImplementation(Repository<UUID, Movie> movieRepository) {
         this.movieRepository = movieRepository;
-        this.executorService = executorService;
     }
 
     /**
@@ -28,21 +26,21 @@ public class MovieServiceServerImplementation implements MovieService {
      * @param movieParams string containing the movie attributes
      * @throws ValidatorException - if the movie is not valid
      */
-    public CompletableFuture<Optional<Movie>> addMovie(String movieParams) throws ValidatorException {
+    public Optional<Movie> addMovie(String movieParams) throws ValidatorException {
         String[] movieParamsArray = movieParams.split(",");
         Movie movie = new Movie(movieParamsArray[0],
                 Double.valueOf(movieParamsArray[1]),
                 Integer.valueOf(movieParamsArray[2]),
                 movieParamsArray[3]);
-        return CompletableFuture.supplyAsync(() -> movieRepository.save(movie), executorService);
+        return movieRepository.save(movie);
     }
 
-    public CompletableFuture<Optional<Boolean>> deleteMovie(UUID id) {
-        return CompletableFuture.supplyAsync(() -> movieRepository.delete(id), executorService);
+    public Optional<Boolean> deleteMovie(UUID id) {
+        return movieRepository.delete(id);
     }
 
 
-    public CompletableFuture<List<Movie>> getMovies() {
-        return CompletableFuture.supplyAsync(() -> movieRepository.findAll(), executorService);
+    public List<Movie> getMovies() {
+        return movieRepository.findAll();
     }
 }
