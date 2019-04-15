@@ -44,23 +44,19 @@ public class Console {
         printMovieMenu();
         int choice = readInt();
 
-        try {
-            switch (choice) {
+        switch (choice) {
 
-                case 1:
-                    String movie = readMovie();
-                    movieService.addMovie(movie).get();
-                    break;
-                case 2:
-                    String id = scanner.nextLine();
-                    movieService.deleteMovie(UUID.fromString(id)).get();
-                    break;
-                case 3:
-                    movieService.getMovies().get();
+            case 1:
+                String movie = readMovie();
+                movieService.addMovie(movie);
+                break;
+            case 2:
+                String id = scanner.nextLine();
+                movieService.deleteMovie(UUID.fromString(id));
+                break;
+            case 3:
+                movieService.getMovies();
 
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
         }
     }
 
