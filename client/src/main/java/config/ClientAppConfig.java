@@ -1,6 +1,7 @@
 package config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiProxyFactoryBean;
 import service.MovieService;
 import service.MovieServiceClientImplementation;
@@ -8,6 +9,7 @@ import service.MovieServiceClientImplementation;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Configuration
 public class ClientAppConfig {
 
     @Bean
