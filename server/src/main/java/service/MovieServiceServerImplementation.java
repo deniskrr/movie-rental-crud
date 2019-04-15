@@ -41,16 +41,6 @@ public class MovieServiceServerImplementation implements MovieService {
         return CompletableFuture.supplyAsync(() -> movieRepository.delete(id), executorService);
     }
 
-    public Future<String> getMovie(UUID id) {
-        return CompletableFuture.supplyAsync(() -> movieRepository.findOne(id), executorService)
-                .thenApply((optional) -> {
-                    if (optional.isPresent()) {
-                        return optional.get().toString();
-                    } else {
-                        return "Movie not found";
-                    }
-                });
-    }
 
     public CompletableFuture<List<Movie>> getMovies() {
         return CompletableFuture.supplyAsync(() -> movieRepository.findAll(), executorService);
