@@ -5,12 +5,10 @@ import domain.Validator.ValidatorException;
 import repo.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Controller class responsible for CRUD operations on movie model
@@ -30,35 +28,17 @@ public class MovieServiceServerImplementation implements MovieService {
      * @param movieParams string containing the movie attributes
      * @throws ValidatorException - if the movie is not valid
      */
-    public Future<String> addMovie(String movieParams) throws ValidatorException {
+    public CompletableFuture<Optional<Movie>> addMovie(String movieParams) throws ValidatorException {
         String[] movieParamsArray = movieParams.split(",");
         Movie movie = new Movie(movieParamsArray[0],
                 Double.valueOf(movieParamsArray[1]),
                 Integer.valueOf(movieParamsArray[2]),
                 movieParamsArray[3]);
-        return CompletableFuture.supplyAsync(() -> movieRepository.save(movie), executorService)
-                .thenApply((optional) -> {
-                    if (optional.isPresent()) {
-                        return "Movie was added to the repository.";
-                    } else {
-                        return "Movie was NOT added to the repository.";
-                    }
-                });
+        return CompletableFuture.supplyAsync(() -> movieRepository.save(movie), executorService);
     }
 
-    public Future<String> deleteMovie(UUID id) {
-        return CompletableFuture.supplyAsync(() -> movieRepository.delete(id), executorService)
-                .thenApply((optional) -> {
-                    if (optional.isPresent()) {
-                        if (optional.get() == true) {
-                            return "Movie was deleted from the repository";
-                        } else {
-                            return "Movie was not found in the repository";
-                        }
-                    } else {
-                        return "Movie was NOT deleted from the repository";
-                    }
-                });
+    public CompletableFuture<Optional<Boolean>> deleteMovie(UUID id) {
+        return CompletableFuture.supplyAsync(() -> movieRepository.delete(id), executorService);
     }
 
     public Future<String> getMovie(UUID id) {
@@ -72,18 +52,7 @@ public class MovieServiceServerImplementation implements MovieService {
                 });
     }
 
-    public Future<String> getMovies() {
-        return CompletableFuture.supplyAsync(() -> movieRepository.findAll(), executorService)
-                .thenApply((optional) -> {
-                    String movies = "";
-                    if (optional.isPresent()) {
-                        for (Movie movie : optional.get()) {
-                            movies += movie.toString() + ";";
-                        }
-                    }
-                    return movies;
-                });
+    public CompletableFuture<List<Movie>> getMovies() {
+        return CompletableFuture.supplyAsync(() -> movieRepository.findAll(), executorService);
     }
-
-
 }
