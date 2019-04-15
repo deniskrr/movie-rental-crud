@@ -1,5 +1,10 @@
 package service;
 
+import domain.Movie;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -16,18 +21,18 @@ public class MovieServiceClientImplementation implements MovieService {
     }
 
     @Override
-    public Future<String> addMovie(String movieParams) {
-        return null;
+    public Optional<Movie> addMovie(String movieParams){
+        return movieService.addMovie(movieParams);
     }
 
     @Override
-    public Future<String> deleteMovie(UUID uid) {
-        return null;
+    public Optional<Boolean> deleteMovie(UUID uid) {
+        return movieService.deleteMovie(uid);
     }
 
     @Override
-    public Future<String> getMovies() {
-        return null;
+    public List<Movie> getMovies() {
+        return movieService.getMovies();
     }
 }
 
