@@ -2,18 +2,21 @@ package controller;
 
 import domain.Client;
 import domain.Validator.ValidatorException;
-import repo.IRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import repo.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Service
 public class ClientController {
-    private IRepository<UUID, Client> clientRepository;
+    private Repository<UUID, Client> clientRepository;
 
-    public ClientController(IRepository<UUID, Client> clientRepository) {
+    @Autowired
+    public ClientController(Repository<UUID, Client> clientRepository) {
         this.clientRepository = clientRepository;
     }
 
@@ -22,14 +25,7 @@ public class ClientController {
     }
 
     public void deleteClient(UUID id) {
-        clientRepository.delete(id);
-    }
-
-    public Client getClient(UUID id) {
-        if (clientRepository.findOne(id).isPresent()) {
-            return clientRepository.findOne(id).get();
-        }
-        return null;
+//        clientRepository.delete(id);
     }
 
     public List<Client> getClients() {

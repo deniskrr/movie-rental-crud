@@ -2,7 +2,9 @@ package controller;
 
 import domain.Movie;
 import domain.Validator.ValidatorException;
-import repo.IRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import repo.Repository;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -12,10 +14,14 @@ import java.util.stream.StreamSupport;
 /**
  * Controller class containing the application functionality.
  */
-public class MovieController {
-    private IRepository<UUID, Movie> movieRepository;
 
-    public MovieController(IRepository<UUID, Movie> movieRepository) {
+@Service
+public class MovieController {
+
+    private final Repository<UUID, Movie> movieRepository;
+
+    @Autowired
+    public MovieController(Repository<UUID, Movie> movieRepository) {
         this.movieRepository = movieRepository;
     }
 
@@ -30,15 +36,9 @@ public class MovieController {
     }
 
     public void deleteMovie(UUID id) {
-        movieRepository.delete(id);
+//        movieRepository.delete(id);
     }
 
-    public Movie getMovie(UUID id) {
-        if (movieRepository.findOne(id).isPresent()) {
-            return movieRepository.findOne(id).get();
-        }
-        return null;
-    }
 
     public List<Movie> getSortedMoviesYear(int year) {
         List<Movie> initial = getMovies().stream().filter(movie -> movie.getYear() > year).sorted(Comparator.comparing(Movie::getTitle)).collect(Collectors.toList());
