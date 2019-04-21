@@ -8,6 +8,8 @@ import domain.Movie;
 import domain.Rental;
 import domain.Validator.InvalidCommandException;
 import domain.Validator.ValidatorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Scanner;
@@ -18,13 +20,17 @@ import java.util.stream.Collectors;
 /**
  * Class responsible for I/O operations
  */
+@Component
+
 public class Console {
 
     private Scanner scanner = new Scanner(System.in);
+
     private MovieController movieController;
     private ClientController clientController;
     private RentalController rentalController;
 
+    @Autowired
     public Console(MovieController movieController, ClientController clientController, RentalController rentalController) {
         this.movieController = movieController;
         this.clientController = clientController;
@@ -71,8 +77,8 @@ public class Console {
             System.out.println("\t" + index++ + ". " + movie);
         }
         int movieIndex = readInt();
-        UUID clientID = clientController.getClients().get(clientIndex-1).getId();
-        UUID movieID = movieController.getMovies().get(movieIndex-1).getId();
+        Long clientID = clientController.getClients().get(clientIndex-1).getId();
+        Long movieID = movieController.getMovies().get(movieIndex-1).getId();
 
         return new Rental(clientID, movieID);
     }
@@ -127,22 +133,18 @@ public class Console {
         clientController.getClients().forEach(System.out::println);
     }
 
-    private void printRentals() {
-        rentalController.getRentals().forEach((rental -> {
-            Client client = clientController.getClient(rental.getClientID());
-            Movie movie = movieController.getMovie(rental.getMovieID());
-            if (client != null && movie != null) {
-                System.out.println("Client:" + client + " --- Movie:" +movie);
-            } else {
-                rentalController.deleteRental(rental.getId());
-            }
-        }));
-    }
+//    private void printRentals() {
+//        rentalController.getRentals().forEach((rental -> {
+//            Client client = clientController.getClient(rental.getClientID());
+//            Movie movie = movieController.getMovie(rental.getMovieID());
+//            if (client != null && movie != null) {
+//                System.out.println("Client:" + client + " --- Movie:" +movie);
+//            } else {
+//                rentalController.deleteRental(rental.getId());
+//            }
+//        }));
+//    }
 
-    private void printRentalCount(){
-        rentalController.getRentals().stream().collect(Collectors.groupingBy(Rental::getMovieID, Collectors.counting())).entrySet().stream().forEach(entry ->
-                System.out.println(movieController.getMovie(entry.getKey()).getTitle() + " - " + entry.getValue()));
-    }
 
     private void printMenu() {
         System.out.println("0. Exit");
@@ -306,16 +308,6 @@ public class Console {
                 } catch (ValidatorException e) {
                     e.printStackTrace();
                 }
-                break;
-            case 2:
-                printRentals();
-                break;
-            case 3:
-                UUID id = rentalController.getMostRentedMovie();
-                System.out.println(movieController.getMovie(id));
-                break;
-            case 4:
-                printRentalCount();
                 break;
             default:
                 throw new InvalidCommandException();
