@@ -1,36 +1,35 @@
 package domain;
 
+import javax.persistence.Entity;
 import java.util.UUID;
 
-public class Rental extends BaseEntity {
-    private UUID clientID;
-    private UUID movieID;
 
-    public Rental(UUID clientID, UUID movieID) {
-        super();
+@Entity
+public class Rental extends BaseEntity<Long> {
+    private Long clientID;
+    private Long movieID;
+
+    public Rental(Long clientID, Long movieID) {
         this.clientID = clientID;
         this.movieID = movieID;
     }
 
     public Rental() {
-        super();
-        this.clientID = UUID.randomUUID();
-        this.movieID = UUID.randomUUID();
     }
 
-    public UUID getClientID() {
+    public Long getClientID() {
         return clientID;
     }
 
-    public UUID getMovieID() {
+    public Long getMovieID() {
         return movieID;
     }
 
-    public void setClientID(UUID clientID) {
+    public void setClientID(Long clientID) {
         this.clientID = clientID;
     }
 
-    public void setMovieID(UUID movieID) {
+    public void setMovieID(Long movieID) {
         this.movieID = movieID;
     }
 

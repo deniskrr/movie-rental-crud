@@ -1,11 +1,13 @@
 package domain;
 
+import javax.persistence.Entity;
 import java.util.function.Predicate;
 
 /**
  * Class representing a movie entity
  */
-public class Movie extends BaseEntity {
+@Entity
+public class Movie extends BaseEntity<Long> {
 
     public static Predicate<Movie> isNiceMovie() {
         return p -> p.getRating() > 8.0;
@@ -19,22 +21,15 @@ public class Movie extends BaseEntity {
         return p -> p.getYear() < 2005;
     }
 
-
     private String title;
     private double rating;
     private int year;
     private String genre;
 
     public Movie() {
-        super();
-        this.title = "";
-        this.rating = 0;
-        this.year = 0;
-        this.genre = "";
     }
 
     public Movie(String title, double rating, int year, String genre) {
-        super();
         this.title = title;
         this.rating = rating;
         this.year = year;

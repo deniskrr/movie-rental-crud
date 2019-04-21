@@ -1,22 +1,21 @@
 package domain;
 
-public class Client extends BaseEntity {
+
+import javax.persistence.Entity;
+
+@Entity
+public class Client extends BaseEntity<Long> {
     private String firstName;
     private String lastName;
     private int yearOfBirth;
 
     public Client(String firstName, String lastName, int yearOfBirth) {
-        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.yearOfBirth = yearOfBirth;
     }
 
     public Client() {
-        super();
-        this.firstName = "";
-        this.lastName = "";
-        this.yearOfBirth= 0;
     }
 
     public String getFirstName() {
