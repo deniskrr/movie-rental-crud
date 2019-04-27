@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><rentals>
-    <rental>
-        <id>dfd343eb-3fdf-4d87-a002-2f332ecab442</id>
-        <client_id>93674fc1-4d37-4744-883b-47753efa10dd</client_id>
-        <movie_id>6b2f37cc-01c6-49c2-93b0-9f0af2968015</movie_id>
-    </rental>
-<rental><id>49f8d652-6fb0-4844-9037-6d877c828fba</id><client_id>6650019c-f0e4-4651-a917-1fd73ace1097</client_id><movie_id>a7fa76db-46f8-4a0c-bbc6-2a97c9d80bfb</movie_id></rental><rental><id>24b627da-5bb1-4564-bf33-e522f14da18a</id><client_id>a3c50be7-dfc8-49df-8d1c-c04bc122d333</client_id><movie_id>a7fa76db-46f8-4a0c-bbc6-2a97c9d80bfb</movie_id></rental><rental><id>c6d416e3-0e19-4931-8329-cbdf368d76c7</id><client_id>a3c50be7-dfc8-49df-8d1c-c04bc122d333</client_id><movie_id>a46ad599-c785-4fca-bb9a-db3e9d25ea96</movie_id></rental><rental><id>32cabd6f-178e-4b35-bdfd-549403f58d5a</id><client_id>fa83a43b-ba4f-45c1-9ab9-745e659984d7</client_id><movie_id>a7fa76db-46f8-4a0c-bbc6-2a97c9d80bfb</movie_id></rental></rentals>

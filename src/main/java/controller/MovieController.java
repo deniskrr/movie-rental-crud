@@ -47,7 +47,7 @@ public class MovieController {
     }
 
     public List<Movie> getMovies() {
-       return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        return  StreamSupport.stream(movieRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     public String findMostPopularGenre() {

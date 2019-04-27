@@ -28,5 +28,8 @@ public class ClientController {
 //        clientRepository.delete(id);
     }
 
+    public List<Client> getClients() {
+        return StreamSupport.stream(clientRepository.findAll().spliterator(), false).collect(Collectors.toList());
+    }
 
 }

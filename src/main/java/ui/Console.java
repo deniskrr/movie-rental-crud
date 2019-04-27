@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Class responsible for I/O operations

@@ -23,16 +23,16 @@ import javax.sql.DataSource;
 @EnableJpaRepositories({"repo"})
 @EnableTransactionManagement
 public class JPAConfig {
-    @Value("${db.jdbcUrl}")
+    @Value("${repo.db.jdbcUrl}")
     private String jdbcUrl;
 
-    @Value("${db.username}")
+    @Value("${repo.db.username}")
     private String username;
 
-    @Value("${db.password}")
+    @Value("${repo.db.password}")
     private String password;
 
-    @Value("${db.generateDDL}")
+    @Value("${repo.db.generateDDL}")
     private Boolean generateDDL;
 
     @Bean
