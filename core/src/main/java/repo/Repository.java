@@ -5,8 +5,6 @@ import domain.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import java.util.Optional;
-
 /**
  * Interface for generic CRUD operations on a repository for a specific type.
  */
