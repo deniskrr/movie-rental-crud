@@ -1,2 +1,5 @@
 rootProject.name = 'MPP'
+include 'core'
+include 'web'
+include 'client'
 
