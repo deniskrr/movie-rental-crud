@@ -14,7 +14,6 @@ import ro.mpp.web.dto.MovieDto;
 import ro.mpp.web.dto.MovieListDto;
 
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
@@ -41,7 +40,7 @@ public class MovieController {
         return result;
     }
 
-    @RequestMapping(value = "/movies", method = RequestMethod.POST)
+    @RequestMapping(value = "/movie", method = RequestMethod.POST)
     MovieDto saveMovie(@RequestBody MovieDto dto) {
         log.trace("saveMovie: dto={}", dto);
 
@@ -55,7 +54,7 @@ public class MovieController {
         return result;
     }
 
-    @RequestMapping(value = "/movies/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/movie/{id}", method = RequestMethod.PUT)
     MovieDto updateMovie(@PathVariable Long id,
                          @RequestBody MovieDto dto) {
         log.trace("updateMovie - id={},dto={}", id, dto);
@@ -68,7 +67,7 @@ public class MovieController {
         return result;
     }
 
-    @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/movie/{id}", method = RequestMethod.DELETE)
     ResponseEntity<?> deleteMovie(@PathVariable Long id) {
         log.trace("deleteMovie: id={}", id);
 
